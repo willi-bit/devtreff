@@ -11,6 +11,7 @@ Coding-Agent neben der App statt.
 - Verdeckte Schätzung mit Story Points und einer persönlichen Begründung
 - Gemeinsames Aufdecken und Vergleich beider Runden
 - Fragenboard mit geprüften Fakten, Annahmen und Belegstellen
+- Vier geführte Klärungsschritte mit getrennten Aufträgen für Moderation und Teilnehmende; offene Fragen werden in den KI-Auftrag übernommen
 - Von der Moderation freigegebene PO-Antworten für ORD-42
 - Verdeckte Antworten auf die Terminfrage, Abschluss und Markdown-Protokoll
 - Session-Neustart für Generalproben

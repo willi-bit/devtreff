@@ -24,7 +24,7 @@ export function report(room: Room) {
     "",
     "## Vereinbarter Scope",
     ...room.answers.map((a) => `- ${a.title}: ${a.text}`),
-    "- Noch offen: messbare Performance-Abnahme mit 1.000 Testdatensätzen.",
+    "- Noch offen: konkrete fünf Exportspalten und messbare Performance-Abnahme mit 1.000 Testdatensätzen.",
     "",
     "## Zweite Schätzung",
     ...room.secondVotes.map((v) => `- ${v.name}: ${v.point} – ${v.reason}`),

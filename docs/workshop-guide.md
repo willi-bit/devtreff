@@ -1,20 +1,25 @@
 # Dein Workshop entlang der App
 
 Die App führt durch die Session. Du moderierst Gespräche, gibst Phasen frei und
-zeigst einmal die Codeanalyse im Coding-Agent. Das vorhandene Foliendeck ist
-dein inhaltliches Drehbuch und die Reserve, falls du darauf zurückgreifen möchtest.
+zeigst einmal die Codeanalyse im Coding-Agent. Zusätzliche Folien sind für diesen
+Ablauf nicht nötig. Das [Sprechskript](vortrags-skript.md) enthält Formulierungen
+und Zeitreserven. Die App zeigt dir und den Kollegen die jeweiligen Aufträge.
 
 ## Vorschlag für 55 Minuten
 
 | Zeit  | In der App          | Dein Fokus                                                                                                                                                           |
 | ----- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0–5   | Ankommen            | Raum öffnen, Link teilen, Namen wählen. „Was steckt für euch hinter einer Schätzung?“                                                                                |
-| 5–12  | Erste Schätzung     | ORD-42, Referenzen und Definition of Done kennenlernen. Alle geben Zahl und wichtigste Annahme verdeckt ab.                                                          |
-| 12–20 | Gemeinsam aufdecken | Zwei unterschiedliche Annahmen besprechen. Auch dieselbe Zahl kann für verschiedene Aufgaben stehen.                                                                 |
-| 20–32 | Gemeinsam klären    | Erst 45 Sekunden selbst nachdenken und Fragen sammeln. Danach Codeanalyse im Agenten; Aussagen und Belege gemeinsam prüfen. Anschließend die PO-Antworten freigeben. |
-| 32–40 | Neu einschätzen     | Erneut unabhängig abstimmen. Im Vergleich besprechen, welche Annahmen sich verändert oder bestätigt haben.                                                           |
-| 40–50 | In den Alltag       | „Geht das bis Freitag? Ihr nutzt doch KI.“ Zwei Sätze pro Person, gemeinsam aufdecken. Ziel, Prognose und Zusage unterscheiden.                                      |
-| 50–55 | Mitnehmen           | Einen Versuch an drei echten Aufgaben vereinbaren. Ergebnisprotokoll herunterladen.                                                                                  |
+| 5–11 | Erste Schätzung | ORD-42, Referenzen und Definition of Done kennenlernen. Alle geben Zahl und wichtigste Annahme verdeckt ab. |
+| 11–17 | Eure Annahmen | Zwei unterschiedliche Vorstellungen besprechen. Daraus entstehen Fragen. |
+| 17–21 | Welche Fragen sind offen? | Jede Person trägt eine Frage zu ihrer Annahme ein. Gemeinsam Schwerpunkte benennen. |
+| 21–26 | KI hinzuziehen | Du kopierst den Auftrag mit den Fragen der Runde in deinen Coding-Agent. Alle verfolgen die Ausgabe und prüfen mindestens einen Beleg. |
+| 26–29 | Ergebnisse prüfen | Zurück in der App: Antworten den Fragen zuordnen, Fakten und Annahmen festhalten. |
+| 29–32 | Produkt klären | Du gibst als Product Owner die vorbereiteten Antworten. Restfragen gemeinsam benennen. |
+| 32–39 | Neu einschätzen | Erneut unabhängig abstimmen und die Begründungen vergleichen. |
+| 39–44 | Kurzer Input | Bei der Vergleichsansicht erklären: Wie verändert schnellere Implementierung die gesamte Lieferzeit? |
+| 44–51 | In den Alltag | „Geht das bis Freitag? Ihr nutzt doch KI.“ Zwei Sätze pro Person, gemeinsam aufdecken und verbessern. |
+| 51–55 | Mitnehmen | Einen Versuch an drei echten Aufgaben vereinbaren. Ergebnisprotokoll herunterladen. |
 
 ## Vorbereiten
 
@@ -35,24 +40,38 @@ dein inhaltliches Drehbuch und die Reserve, falls du darauf zurückgreifen möch
 
 ## Die KI-Sequenz
 
-Die Hauptaktion steht oben bei der Überschrift. Die Referenzen lassen sich zu
-Beginn aufklappen und sind in den Schätzrunden direkt sichtbar. Deinen
-**Moderationshinweis** kannst du rechts bei Bedarf öffnen.
+Nach dem ersten Aufdecken sagst du: „Welche Information würde eure Einschätzung
+verändern? Aus unseren Annahmen machen wir jetzt Fragen.“ Mit **Fragen sammeln**
+beginnt die geführte Klärung. Jeder weitere Klick schaltet die ganze Runde in
+denselben nächsten Schritt.
 
-Einen **frischen Agent-Chat** öffnen, damit die vorbereiteten PO-Antworten aus der
-Workshop-Planung dort noch nicht bekannt sind. Während der Phase „Gemeinsam
-klären“ liegt rechts der kopierbare **Analyseauftrag** bereit.
+| Schritt | Du als Leiter | Die Kollegen | Danach klickst du |
+| --- | --- | --- | --- |
+| Fragen sammeln | 45 Sekunden Nachdenken geben, dann zwei oder drei Fragen vorlesen. | Aus der eigenen Annahme eine konkrete Frage machen und eintragen. | **Zum KI-Auftrag** |
+| KI hinzuziehen | **Auftrag mit euren Fragen kopieren**, im Workshop-Projekt einen frischen Agent-Chat öffnen, einfügen und starten. Deinen Agent-Bildschirm teilen; zwei oder drei Aussagen und eine Belegstelle zeigen. | In der Workshop-App bleiben und auf dem geteilten Bildschirm verfolgen: Wird meine Frage beantwortet? Ist die Antwort belegt? | Nach der Rückkehr zur App: **Ergebnisse gemeinsam prüfen** |
+| Gemeinsam prüfen | Gemeinsam geprüfte Fakten und Annahmen am Board festhalten. Beantwortete Fragen als geklärt markieren. | Erklären, welche Aussage die eigene Annahme verändert oder bestätigt; unbelegte Antworten und Restfragen benennen. | **Produktantworten aufdecken** |
+| Produkt klären | Die Rolle des Product Owners übernehmen und die vier vorbereiteten Antworten vorlesen. | Antworten den offenen Fragen zuordnen und die verbleibende Unsicherheit benennen. | **Zweite Runde starten** |
+
+Nur du brauchst den Coding-Agent. Die App stellt den Auftrag mit den aktuell
+offenen Fragen zum Kopieren bereit; starten musst du ihn in deinem Coding-Tool.
+Die Kollegen benötigen weder das Repository noch einen eigenen KI-Zugang.
 
 Der Auftrag begrenzt den Kontext auf `demo/`, `convex/demo.ts` und
-`src/components/demo-portal.tsx`. Ticket, Systemkontext und Referenzen befinden
-sich im Demo-Verzeichnis. Die Moderationsmaterialien werden erst später
-hinzugezogen. Die KI soll Fakten, Annahmen und Rückfragen mit Codebelegen liefern;
-eine Zahl oder eine Implementierung gehören nicht zu diesem Auftrag.
+`src/components/demo-portal.tsx`. Ticket, Systemkontext und Referenzen liegen im
+Demo-Verzeichnis. Nutze einen **frischen Agent-Chat**, der die vorbereiteten
+Produktantworten noch nicht kennt. Erwartet werden höchstens drei technische
+Erkenntnisse mit Belegen, Antworten auf eure Fragen und priorisierte Rückfragen.
+Eine Schätzzahl und Codeänderungen gehören nicht zum Auftrag.
 
-Teilnehmende tragen offene Fragen zum Board bei. Du kannst zusätzlich geprüfte
-Fakten und ausdrücklich gekennzeichnete Annahmen festhalten, eine Belegstelle
-angeben und Fragen als geklärt markieren. **PO-Antworten freigeben** öffnet den
-vorbereiteten Scope für alle. Die messbare Performance-Abnahme bleibt dabei offen.
+Die Ergebnisse werden durch dich nach gemeinsamer Prüfung ins Board übernommen.
+Produktfragen beantwortest du erst im nächsten Schritt mit den vorbereiteten
+PO-Antworten. Die konkrete Benennung der fünf Spalten und die messbare
+Performance-Abnahme bleiben als Restfragen sichtbar.
+
+Beispiel: Aus „Ich gehe von einer XLSX-Datei aus“ wird „Reicht CSV?“. Die KI kann
+zeigen, welche Exportfunktionen bereits vorhanden sind. Dass CSV für die neue
+Aufgabe genügt, entscheidet anschließend der Product Owner. Mit dieser Antwort
+prüft die Person ihre ursprüngliche Einschätzung erneut.
 
 ## Moderationsregeln
 

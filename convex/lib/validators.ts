@@ -5,6 +5,8 @@ export const phaseValidator = v.union(
   v.literal("estimate1"),
   v.literal("reveal1"),
   v.literal("refine"),
+  v.literal("analyze"),
+  v.literal("review"),
   v.literal("scope"),
   v.literal("estimate2"),
   v.literal("compare"),

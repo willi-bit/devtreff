@@ -17,7 +17,7 @@ import {
   Target,
 } from "lucide-react";
 import { api } from "@convex/_generated/api";
-import { POINTS, REFERENCES, STORY, type Point } from "../../shared/workshop";
+import { POINTS, REFERENCES, STORY, isRefinementPhase, type Point } from "../../shared/workshop";
 import { useTask } from "@/lib/browser";
 import type { Room, Vote } from "@/lib/room";
 import { Avatar, Button, DemoLink, ErrorNote } from "./ui";
@@ -387,7 +387,7 @@ export function ScopePanel({
     <section
       className={`scope-section ${compact ? "scope-compact panel" : ""}`}
     >
-      {compact && <h3>Der geklärte Scope</h3>}
+      {compact && <h3>Vereinbarter Lieferumfang</h3>}
       <div className="scope-grid">
         {room.answers.map((a, index) => (
           <article className="panel scope-card" key={a.title}>
@@ -403,10 +403,10 @@ export function ScopePanel({
       <div className="open-question">
         <CircleHelp size={20} />
         <p>
-          <b>Offen: Performance-Abnahme</b>
+          <b>Noch zu klären</b>
           <br />
-          Messbare Performance-Abnahme mit 1.000 Testdatensätzen gemeinsam
-          vereinbaren.
+          Die fünf Exportspalten konkret benennen und eine messbare
+          Performance-Abnahme mit 1.000 Testdatensätzen vereinbaren.
         </p>
       </div>
     </section>
@@ -421,15 +421,16 @@ export function RefinementPanel({
   token: string;
 }) {
   const [text, setText] = useState("");
+  const recordingFindings = room.phase === "review" || room.phase === "scope";
   const [kind, setKind] = useState<"question" | "fact" | "assumption">(
-    "question",
+    room.isHost && recordingFindings ? "fact" : "question",
   );
   const [source, setSource] = useState("");
   const add = useMutation(api.rooms.addInsight);
   const access = useDemoAccess();
   const resolve = useMutation(api.rooms.resolveInsight);
   const task = useTask();
-  const editable = room.phase === "refine" || room.phase === "scope";
+  const editable = isRefinementPhase(room.phase);
   function submit(event: FormEvent) {
     event.preventDefault();
     void task.run(async () => {
@@ -450,23 +451,23 @@ export function RefinementPanel({
     fact: "Geprüfter Fakt",
     assumption: "Annahme",
   };
+  const openQuestionCount = room.insights.filter(
+    (item) => !item.resolved && item.kind === "question",
+  ).length;
   return (
     <>
-      <div className="refinement-intro">
-        <b>Fragen sammeln</b>
-        <ArrowRight size={17} />
-        <b>KI-Codeanalyse</b>
-        <ArrowRight size={17} />
-        <b>Gemeinsam bewerten</b>
-      </div>
       {editable && (
         <form className="panel insight-form" onSubmit={submit}>
           <div className="panel-top">
             <h2>
-              {room.isHost ? "Erkenntnis hinzufügen" : "Frage hinzufügen"}
+              {room.isHost && recordingFindings
+                ? "Erkenntnis aus eurem Gespräch festhalten"
+                : room.phase === "refine"
+                  ? "Welche Antwort fehlt dir?"
+                  : "Eine Rückfrage ergänzen"}
             </h2>
           </div>
-          {room.isHost && (
+          {room.isHost && recordingFindings && (
             <label className="select-label">
               Art des Beitrags
               <select
@@ -487,8 +488,8 @@ export function RefinementPanel({
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder={
-              room.isHost
-                ? "Welche Erkenntnis habt ihr gemeinsam geprüft?"
+              room.isHost && recordingFindings
+                ? "Unsere Frage war … Wir haben geprüft, dass … Offen bleibt …"
                 : "Um die Aufgabe einschätzen zu können, müsste ich wissen …"
             }
             minLength={3}
@@ -496,7 +497,7 @@ export function RefinementPanel({
             required
             rows={3}
           />
-          {room.isHost && kind === "fact" && (
+          {room.isHost && recordingFindings && kind === "fact" && (
             <label className="field-label">
               Beleg <span className="muted">(optional)</span>
               <input
@@ -522,11 +523,7 @@ export function RefinementPanel({
       <div className="section-title">
         <h2>Fragen & Erkenntnisse</h2>
         <span>
-          {
-            room.insights.filter((i) => !i.resolved && i.kind === "question")
-              .length
-          }{" "}
-          offene Fragen
+          {openQuestionCount} {openQuestionCount === 1 ? "offene Frage" : "offene Fragen"}
         </span>
       </div>
       <div className="insight-grid">
@@ -546,7 +543,7 @@ export function RefinementPanel({
                 )}
                 {item.resolved ? "Geklärt" : labels[item.kind]}
               </span>
-              {room.isHost && (
+              {room.isHost && item.kind === "question" && (
                 <button
                   className="icon-button"
                   title={

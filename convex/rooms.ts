@@ -6,7 +6,7 @@ import {
   type QueryCtx,
 } from "./_generated/server";
 import type { Doc } from "./_generated/dataModel";
-import { PHASES } from "../shared/workshop";
+import { PHASES, isRefinementPhase } from "../shared/workshop";
 import { PO_ANSWERS } from "./lib/answers";
 import { requireDemoAccess } from "./lib/access";
 import {
@@ -285,7 +285,7 @@ export const addInsight = mutation({
   handler: async (ctx, args) => {
     await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
-    if (room.phase !== "refine" && room.phase !== "scope")
+    if (!isRefinementPhase(room.phase))
       throw new ConvexError("Das Fragenboard ist gerade geschlossen.");
     const isHost = room.hostToken === args.token;
     const member = isHost ? null : await requireMember(ctx, room, args.token);

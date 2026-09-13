@@ -238,6 +238,65 @@ describe("Independent estimation and moderator control", () => {
       token: host,
       expectedPhase: "refine",
     });
+    expect(
+      await t.query(api.rooms.get, { access, code, token: alice }),
+    ).toMatchObject({
+      phase: "analyze",
+      answers: [],
+      insights: [{ text: "Does CSV suffice?", resolved: false }],
+    });
+    await t.mutation(api.rooms.addInsight, {
+      access,
+      code,
+      token: alice,
+      text: "Does a customer CSV export already exist?",
+      kind: "question",
+    });
+    await expect(
+      t.mutation(api.rooms.advance, {
+        access,
+        code,
+        token: alice,
+        expectedPhase: "analyze",
+      }),
+    ).rejects.toThrow("Nur die Moderation");
+    await t.mutation(api.rooms.advance, {
+      access,
+      code,
+      token: host,
+      expectedPhase: "analyze",
+    });
+    const reviewed = await t.query(api.rooms.get, { access, code, token: alice });
+    expect(reviewed).toMatchObject({ phase: "review", answers: [] });
+    if (reviewed?.access !== "joined")
+      throw new Error("Participant must remain joined");
+    await t.mutation(api.rooms.addInsight, {
+      access,
+      code,
+      token: host,
+      text: "A customer CSV export is available; order reuse still needs checking.",
+      kind: "fact",
+      source: "demo/README.md",
+    });
+    await t.mutation(api.rooms.resolveInsight, {
+      access,
+      code,
+      token: host,
+      id: reviewed.insights[1].id,
+    });
+    await t.mutation(api.rooms.addInsight, {
+      access,
+      code,
+      token: alice,
+      text: "Which columns should be included?",
+      kind: "question",
+    });
+    await t.mutation(api.rooms.advance, {
+      access,
+      code,
+      token: host,
+      expectedPhase: "review",
+    });
     const clarified = await t.query(api.rooms.get, {
       access,
       code,
@@ -246,6 +305,8 @@ describe("Independent estimation and moderator control", () => {
     if (clarified?.access !== "joined")
       throw new Error("Participant must remain joined");
     expect(clarified.answers).toHaveLength(4);
+    expect(clarified.insights).toHaveLength(4);
+    expect(clarified.insights[1].resolved).toBe(true);
     await t.mutation(api.rooms.advance, {
       access,
       code,
@@ -258,6 +319,15 @@ describe("Independent estimation and moderator control", () => {
       firstVotes: [],
       secondVotes: [],
     });
+    await expect(
+      t.mutation(api.rooms.addInsight, {
+        access,
+        code,
+        token: alice,
+        text: "A late question during the independent vote",
+        kind: "question",
+      }),
+    ).rejects.toThrow("gerade geschlossen");
     await t.mutation(api.rooms.vote, {
       access,
       code,

@@ -1190,19 +1190,123 @@ select:focus {
 .scope-compact .open-question p {
   font-size: 10px;
 }
-.refinement-intro {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 0 0 8px;
+.refinement-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.refinement-intro b {
-  font-size: 10px;
+.refinement-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 9px;
+  color: var(--muted);
+  font-size: 12px;
+  border-bottom: 2px solid var(--line);
+}
+.refinement-steps li > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 23px;
+  height: 23px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 11px;
+}
+.refinement-steps .is-current {
+  color: var(--lime);
+  border-color: var(--lime);
+}
+.refinement-steps .is-current > span {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--dark);
+}
+.refinement-steps .is-complete > span {
+  color: var(--success);
+  border-color: var(--success-line);
+}
+.workshop-guidance {
+  border-color: var(--success-line);
+}
+.workshop-guidance h2 {
+  margin-top: 16px;
+}
+.guidance-tasks {
+  list-style: decimal;
+  padding-left: 22px;
+  margin: 18px 0 0;
+}
+.guidance-tasks li {
+  padding-left: 5px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.guidance-tasks li::marker {
+  color: var(--accent-text);
   font-weight: 600;
 }
-.refinement-intro > svg {
+.workshop-guidance blockquote {
+  margin: 20px 0 0;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent-text);
+  background: var(--input);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.workshop-guidance blockquote > span {
+  display: block;
+  margin-bottom: 6px;
   color: var(--muted);
+  font-size: 12px;
+}
+.guidance-counterpart,
+.guidance-next {
+  margin-top: 17px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.guidance-next {
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+}
+.analysis-panel > p,
+.analysis-panel details p {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.analysis-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.analysis-panel details {
+  margin-top: 20px;
+  font-size: 13px;
+}
+.analysis-panel pre {
+  padding: 15px;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: var(--input);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.7;
+}
+@media (max-width: 760px) {
+  .refinement-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .insight-form textarea {
   margin-top: 18px;
@@ -1863,16 +1967,6 @@ dialog p {
   }
   .section-title > span {
     font-size: 8px;
-  }
-  .refinement-intro {
-    gap: 4px;
-    padding: 20px 8px;
-  }
-  .refinement-intro > svg {
-    width: 12px;
-  }
-  .refinement-intro b {
-    font-size: 9px;
   }
   .forecast-grid {
     grid-template-columns: 1fr;

@@ -11,7 +11,6 @@ import {
   Check,
   CheckCheck,
   ChevronDown,
-  Clipboard,
   Copy,
   Download,
   ExternalLink,
@@ -24,9 +23,9 @@ import {
 } from "lucide-react";
 import { api } from "@convex/_generated/api";
 import {
-  ANALYSIS_PROMPT,
   PHASE_COPY,
   STEPS,
+  isRefinementPhase,
   stepIndex,
 } from "../../shared/workshop";
 import {
@@ -40,7 +39,8 @@ import {
 } from "@/lib/browser";
 import { report, type Room } from "@/lib/room";
 import { useDemoAccess } from "./convex-client-provider";
-import { AppLoading, Avatar, Button, DemoLink, ErrorNote, Logo } from "./ui";
+import { AppLoading, Avatar, Button, ErrorNote, Logo } from "./ui";
+import { AnalysisPanel, WorkshopGuidance } from "./workshop-guidance";
 import {
   LobbyPanel,
   RefinementPanel,
@@ -252,48 +252,6 @@ function ShareDialog({ code }: { code: string }) {
   );
 }
 
-function AnalysisDialog() {
-  const dialog = useRef<HTMLDialogElement>(null);
-  const [copied, setCopied] = useState(false);
-  const task = useTask();
-  return (
-    <>
-      <Button variant="secondary" onClick={() => dialog.current?.showModal()}>
-        <Clipboard size={16} /> Analyseauftrag öffnen
-      </Button>
-      <dialog
-        ref={dialog}
-        className="analysis-dialog"
-        aria-labelledby="analysis-heading"
-      >
-        <div className="panel-top">
-          <h2 id="analysis-heading">Analyseauftrag</h2>
-          <button
-            className="icon-button"
-            onClick={() => dialog.current?.close()}
-            aria-label="Analyseauftrag schließen"
-          >
-            <X size={20} />
-          </button>
-        </div>
-        <pre>{ANALYSIS_PROMPT}</pre>
-        <Button
-          onClick={() =>
-            void task.run(async () => {
-              await navigator.clipboard.writeText(ANALYSIS_PROMPT);
-              setCopied(true);
-            })
-          }
-        >
-          {copied ? <Check size={17} /> : <Copy size={17} />}
-          {copied ? "Analyseauftrag kopiert" : "Analyseauftrag kopieren"}
-        </Button>
-        <ErrorNote error={task.error} />
-      </dialog>
-    </>
-  );
-}
-
 function Workspace({ room, token }: { room: Room; token: string }) {
   const access = useDemoAccess();
   const advance = useMutation(api.rooms.advance);
@@ -409,17 +367,16 @@ function Workspace({ room, token }: { room: Room; token: string }) {
             className="phase-content"
             key={`${room.generation}-${room.phase}`}
           >
+            <WorkshopGuidance room={room} />
             {room.phase === "lobby" && <LobbyPanel room={room} />}
             {room.phase === "estimate1" && (
               <VotePanel room={room} token={token} round={1} />
             )}
             {room.phase === "reveal1" && <ResultsPanel room={room} />}
-            {room.phase === "refine" && (
-              <RefinementPanel room={room} token={token} />
-            )}
-            {room.phase === "scope" && (
+            {isRefinementPhase(room.phase) && (
               <>
-                <ScopePanel room={room} />
+                {room.phase === "analyze" && <AnalysisPanel room={room} />}
+                {room.phase === "scope" && <ScopePanel room={room} />}
                 <RefinementPanel room={room} token={token} />
               </>
             )}
@@ -508,12 +465,6 @@ function Workspace({ room, token }: { room: Room; token: string }) {
                 </summary>
                 <p>{phase.cue}</p>
               </details>
-              {room.phase === "refine" && (
-                <div className="agent-tools">
-                  <AnalysisDialog />
-                  <DemoLink />
-                </div>
-              )}
               <details className="session-options">
                 <summary>
                   Workshop verwalten <ChevronDown size={13} />

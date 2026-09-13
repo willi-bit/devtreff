@@ -60,9 +60,6 @@
 .workspace .insight-label {
   font-size: 10px;
 }
-.workspace .refinement-intro b {
-  font-size: 12px;
-}
 .workspace .takeaway-card p {
   font-size: 13px;
 }
@@ -111,9 +108,6 @@
 @media (max-width: 480px) {
   .workspace .step-navigation .step-current > div {
     font-size: 9px;
-  }
-  .workspace .refinement-intro b {
-    font-size: 10px;
   }
   .workspace .story-panel blockquote {
     padding: 0;
