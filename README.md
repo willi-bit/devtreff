@@ -1,27 +1,35 @@
-# devtreff
+# devtreff · Gemeinsam besser schätzen
 
-A small presentation app, starting with a working Next.js + Convex foundation.
-The product idea and features come next. The starter page only checks the live
-Convex connection; there are no app tables or authentication yet.
+Eine App für einen moderierten Schätzworkshop: zehn Entwickler:innen, eine
+konkrete Story und zwei unabhängige Schätzrunden. Das Publikum nimmt über die App
+teil; die Moderation führt den gemeinsamen Ablauf. Die KI-Codeanalyse findet im
+Coding-Agent neben der App statt.
 
-- Next.js 16 App Router, React 19, TypeScript, and Tailwind CSS 4
-- Convex cloud backend with generated API types
-- npm and Node.js 22
-- Vercel build configuration for deploying the frontend and backend together
+## Enthalten
 
-## Run locally
+- Räume mit Teilnehmerlink, QR-Code und getrennten Moderationszugängen
+- Verdeckte Schätzung mit Story Points und einer persönlichen Begründung
+- Gemeinsames Aufdecken und Vergleich beider Runden
+- Fragenboard mit geprüften Fakten, Annahmen und Belegstellen
+- Von der Moderation freigegebene PO-Antworten für ORD-42
+- Verdeckte Antworten auf die Terminfrage, Abschluss und Markdown-Protokoll
+- Session-Neustart für Generalproben
+- Ein ausführbares, fiktives B2B-Beispiel mit Statusfilter, Pagination und Kunden-CSV
 
-From this already configured checkout:
+**Den Vortrag vorbereiten:** [Moderationsleitfaden für 55 Minuten](docs/workshop-guide.md).
+
+## Lokal starten
+
+Node.js 22 verwenden. In diesem bereits konfigurierten Checkout:
 
 ```sh
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). The command syncs Convex first, then
-starts Next.js, and keeps both running. The page shows **Connected** after its
-backend query succeeds over the live connection.
+[localhost:3000](http://localhost:3000) öffnen. Das Kommando synchronisiert zuerst
+Convex und startet anschließend Next.js. Beide Dienste bleiben aktiv.
 
-For a fresh clone:
+Für einen frischen Clone mit Zugang zum Convex-Projekt:
 
 ```sh
 npm ci
@@ -29,50 +37,78 @@ npx convex dev --configure existing --team willi --project devtreff --dev-deploy
 npm run dev
 ```
 
-Sign in to an account with access to the project when prompted. Convex creates
-`.env.local` with your development deployment details. `.env.example` documents
-the variables; real environment files and deploy keys stay out of Git.
+Convex schreibt die Entwicklungsumgebung in `.env.local`. `.env.example`
+beschreibt die Variablen. Umgebungsdateien und Deploy-Keys bleiben außerhalb von Git.
 
-## Commands
+## Ansichten
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Run Convex and Next.js together |
-| `npm run dev:frontend` | Run only Next.js |
-| `npm run dev:backend` | Run only the Convex watcher |
-| `npm run check` | Lint and typecheck the frontend and backend |
-| `npm run convex:check` | Typecheck, generate types, and sync the dev backend once |
-| `npm run build` | Build Next.js for production using the configured Convex URL |
-| `npm start` | Serve the local production build |
-| `npm run build:vercel` | Deploy Convex and build Next.js with the matching URL |
+| Route          | Zweck                                            |
+| -------------- | ------------------------------------------------ |
+| `/`            | Workshop starten oder per Raumcode beitreten     |
+| `/host/[code]` | Moderation im Browser, der den Raum erstellt hat |
+| `/room/[code]` | Mit einem Namen teilnehmen                       |
+| `/demo`        | B2B-Ausgangsbasis für die Codeanalyse            |
 
-## Project layout
+Host- und Teilnehmerzugänge sind zufällige Browser-Tokens. Der Host-Token wird
+nicht in Einladungslinks oder öffentlichen Abfragen ausgegeben. Die Convex-
+Funktionen prüfen die Rolle, den Raum und die aktuelle Phase. Verdeckte Stimmen
+und Antworten werden serverseitig zurückgehalten, auch gegenüber der Moderation.
+Die zweite Schätzphase blendet die erste Gruppenverteilung erneut aus.
 
-- `src/app/`: routes, layout, and global styles
-- `src/components/`: shared UI and the Convex client provider
-- `convex/schema.ts`: database schema, currently empty
-- `convex/health.ts`: small read-only connection check
-- `convex/_generated/`: generated Convex API and types; commit these files
-- `vercel.json`: Vercel build configuration
+Wer den lokalen Browserspeicher löscht, verliert den dort gespeicherten Zugang.
+Es gibt bewusst keine Konten oder Zugangswiederherstellung in dieser ersten Version.
 
-Use `@/` for frontend imports and `@convex/` for the generated backend API.
+## Entwicklung und Prüfung
 
-## Deploy to Vercel later
+| Kommando               | Zweck                                                                   |
+| ---------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`          | Convex und Next.js gemeinsam starten                                    |
+| `npm run dev:frontend` | Nur Next.js                                                             |
+| `npm run dev:backend`  | Nur der Convex-Watcher                                                  |
+| `npm run check`        | ESLint, TypeScript und Tests                                            |
+| `npm test`             | Verhaltenstests mit Vitest und convex-test                              |
+| `npm run test:watch`   | Tests bei Änderungen erneut ausführen                                   |
+| `npm run convex:check` | Typen generieren, prüfen und Entwicklungsbackend einmal synchronisieren |
+| `npm run build`        | Next.js-Produktionsbuild mit konfigurierter Convex-URL                  |
+| `npm start`            | Produktionsbuild lokal starten                                          |
+| `npm run build:vercel` | Convex deployen und Next.js mit passender Backend-URL bauen             |
 
-1. Import [willi-bit/devtreff](https://github.com/willi-bit/devtreff) into Vercel.
-   Use the repository root and Node.js 22.x.
-2. In the [Convex project dashboard](https://dashboard.convex.dev/t/willi/devtreff),
-   create a production deployment when ready. Generate its production deploy key
-   with the `deployment:deploy` permission in deployment settings.
-3. Add the key as `CONVEX_DEPLOY_KEY` in Vercel, scoped to **Production**.
-4. Deploy. `vercel.json` selects `npm run build:vercel`, which deploys Convex and
-   provides `NEXT_PUBLIC_CONVEX_URL` to the Next.js build automatically.
+Die Tests prüfen verdeckte Stimmen und Antworten, Moderationsrechte,
+Raumtrennung, zulässige Phasen, Stimmenänderungen, Scope-Freigabe und Reset.
+Das B2B-Beispiel prüft zusätzlich Rollen, Mandanten, Pagination und CSV-Randfälle.
+`convex-test` ist ein Backend-Testdouble; zusätzlich den Leitfaden mit zwei
+Browseransichten gegen das echte Entwicklungsbackend durchspielen.
 
-For Vercel previews, create a separate **preview deploy key** in Convex project
-settings and set it as `CONVEX_DEPLOY_KEY` scoped to **Preview**. Each branch gets
-its own backend. Preview builds require that key; keep the production key scoped
-to Production.
+## Projektstruktur
 
-Vercel has not been provisioned. See the
-[official Convex Vercel guide](https://docs.convex.dev/production/hosting/vercel)
-for the deployment workflow.
+- `src/app/`: Next.js App Router und Styles
+- `src/components/`: Startseite, Workshop-Ansichten und B2B-Oberfläche
+- `shared/workshop.ts`: Phasen, Texte, Startticket, Referenzen und Analyseauftrag
+- `convex/rooms.ts`: gemeinsame Session mit serverseitigen Freigaben
+- `convex/schema.ts`: Räume, Teilnehmende, Stimmen, Erkenntnisse und Terminantworten
+- `convex/lib/answers.ts`: vorbereitetes Moderationsmaterial
+- `convex/demo.ts`: Backend-Anbindung des B2B-Beispiels
+- `demo/`: isolierter Analysekontext, ausführbare Ausgangsbasis und fiktive Daten
+- `tests/`: Tests des Workshop-Ablaufs
+- `convex/_generated/`: generierte API und Typen; einchecken, nicht manuell bearbeiten
+
+Next.js 16, React 19, TypeScript, Tailwind CSS 4, Convex, Lucide und qrcode.react.
+Frontend-Imports nutzen `@/`, die generierte Backend-API `@convex/`.
+
+## Später auf Vercel deployen
+
+1. [willi-bit/devtreff](https://github.com/willi-bit/devtreff) auf Vercel importieren.
+   Repository-Wurzel und Node.js 22.x verwenden.
+2. Im [Convex-Dashboard](https://dashboard.convex.dev/t/willi/devtreff) eine
+   Produktionsumgebung anlegen und einen Production Deploy Key mit
+   `deployment:deploy`-Berechtigung erzeugen.
+3. Den Key in Vercel als `CONVEX_DEPLOY_KEY` für **Production** hinterlegen.
+4. Deployen. `vercel.json` verwendet `npm run build:vercel` und übergibt die
+   passende `NEXT_PUBLIC_CONVEX_URL` automatisch an den Frontend-Build.
+
+Für Preview-Deployments einen separaten Preview Deploy Key in Convex erzeugen
+und in Vercel als `CONVEX_DEPLOY_KEY` ausschließlich für **Preview** setzen.
+Preview-Builds benötigen diesen Key und bekommen einen eigenen Backend-Kontext.
+
+Vercel ist noch nicht eingerichtet. Grundlage ist der
+[offizielle Convex-Vercel-Ablauf](https://docs.convex.dev/production/hosting/vercel).

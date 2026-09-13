@@ -1,0 +1,122 @@
+/* Keep workshop content readable while screen sharing and on personal devices. */
+.workspace .phase-heading p {
+  font-size: 14px;
+}
+.workspace .phase-heading h1:focus {
+  outline: none;
+}
+.workspace .panel h2 {
+  font-size: 20px;
+}
+.workspace .panel h3 {
+  font-size: 14px;
+}
+.workspace .story-compact blockquote {
+  font-size: 15px;
+}
+.workspace .context-details summary,
+.workspace .context-details > .text-link {
+  font-size: 12px;
+}
+.workspace .context-details li {
+  font-size: 13px;
+}
+.workspace .done-line,
+.workspace .done-line b {
+  font-size: 12px;
+}
+.workspace .reference-item h4 {
+  font-size: 12px;
+}
+.workspace .reference-item p {
+  font-size: 11px;
+}
+.workspace .reference-panel .fine-print {
+  font-size: 10px;
+}
+.workspace .field-label,
+.workspace .estimate-fieldset legend {
+  font-size: 13px;
+}
+.workspace textarea {
+  font-size: 14px;
+}
+.workspace .voting-panel .muted,
+.workspace .lobby-banner p {
+  font-size: 13px;
+}
+.workspace .form-footer .button {
+  font-size: 12px;
+}
+.workspace .badge {
+  font-size: 10px;
+}
+.workspace .people-list .person-row > span:nth-child(2) {
+  font-size: 12px;
+}
+.workspace .moderator-notes p {
+  font-size: 12px;
+}
+.workspace .scope-card p,
+.workspace .perspective p {
+  font-size: 13px;
+}
+.workspace .scope-compact .scope-card p {
+  font-size: 11px;
+}
+.workspace .insight-label {
+  font-size: 10px;
+}
+.workspace .refinement-intro b {
+  font-size: 12px;
+}
+.workspace .refinement-intro span {
+  font-size: 10px;
+}
+.workspace .takeaway-card p {
+  font-size: 13px;
+}
+.workspace .reason-comparison p {
+  font-size: 12px;
+}
+.workspace .step-navigation li {
+  font-size: 12px;
+}
+.workspace .insight-callout p,
+.workspace .open-question p {
+  font-size: 12px;
+}
+@media (max-width: 1050px) {
+  .workspace .reference-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .workspace .reference-item {
+    align-items: center;
+    gap: 13px;
+  }
+  .workspace .reference-item > strong {
+    min-width: 37px;
+    height: 42px;
+  }
+}
+@media (max-width: 480px) {
+  .workspace .phase-heading p {
+    font-size: 13px;
+  }
+  .workspace .step-navigation .step-current > div {
+    font-size: 9px;
+  }
+  .workspace .refinement-intro b {
+    font-size: 10px;
+  }
+  .workspace .refinement-intro span {
+    font-size: 8px;
+  }
+  .workspace .panel h2 {
+    font-size: 18px;
+  }
+  .workspace .panel h3 {
+    font-size: 13px;
+  }
+}

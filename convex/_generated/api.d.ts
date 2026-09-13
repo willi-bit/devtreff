@@ -8,7 +8,11 @@
  * @module
  */
 
+import type * as demo from "../demo.js";
 import type * as health from "../health.js";
+import type * as lib_answers from "../lib/answers.js";
+import type * as lib_validators from "../lib/validators.js";
+import type * as rooms from "../rooms.js";
 
 import type {
   ApiFromModules,
@@ -17,7 +21,11 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  demo: typeof demo;
   health: typeof health;
+  "lib/answers": typeof lib_answers;
+  "lib/validators": typeof lib_validators;
+  rooms: typeof rooms;
 }>;
 
 /**

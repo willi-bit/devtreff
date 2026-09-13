@@ -1,14 +1,19 @@
 # Backend
 
-Add database tables to `schema.ts` and Convex functions to this directory.
-`health.ts` is a read-only query used to verify the initial connection.
+`rooms.ts` implementiert den Workshop mit serverseitiger Prüfung von Raum,
+Zugang und Phase. `schema.ts` definiert seine Tabellen. `lib/answers.ts` enthält
+das vorbereitete Material, das Teilnehmende erst nach Freigabe erhalten.
 
-Run `npm run dev` from the project root to sync changes automatically, or
-`npm run convex:check` for a single sync and typecheck.
+`demo.ts` bindet das fiktive B2B-Beispiel aus `../demo/` an. Diese Daten sind
+reproduzierbare Lehrdaten. Die Demo-Personas sind keine echte Anmeldung.
 
-Files in `_generated/` are produced by the Convex CLI. Commit them, but do not
-edit them manually.
+`npm run dev` synchronisiert Änderungen; `npm run convex:check` führt einen
+einzelnen Sync mit Typprüfung aus. Die Tests liegen in `../tests/` und werden
+mit `npm test` ausgeführt.
 
-Project: <https://dashboard.convex.dev/t/willi/devtreff>
+`_generated/` wird vom CLI erzeugt. Diese Dateien einchecken und nicht manuell
+bearbeiten.
 
-Documentation: <https://docs.convex.dev/quickstart/nextjs>
+Projekt: <https://dashboard.convex.dev/t/willi/devtreff>
+
+Dokumentation: <https://docs.convex.dev/quickstart/nextjs>
