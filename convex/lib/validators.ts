@@ -2,6 +2,7 @@ import { v } from "convex/values";
 
 export const phaseValidator = v.union(
   v.literal("lobby"),
+  v.literal("intro"),
   v.literal("estimate1"),
   v.literal("reveal1"),
   v.literal("refine"),

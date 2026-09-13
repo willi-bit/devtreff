@@ -11,6 +11,7 @@ export default defineSchema({
     code: v.string(),
     hostToken: v.string(),
     phase: phaseValidator,
+    introSlide: v.optional(v.number()),
     generation: v.number(),
     reflectionsRevealed: v.boolean(),
   }).index("by_code", ["code"]),

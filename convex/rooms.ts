@@ -7,6 +7,7 @@ import {
 } from "./_generated/server";
 import type { Doc } from "./_generated/dataModel";
 import { PHASES, isRefinementPhase } from "../shared/workshop";
+import { INTRO_SLIDES } from "../shared/introduction";
 import { PO_ANSWERS } from "./lib/answers";
 import { requireDemoAccess } from "./lib/access";
 import {
@@ -16,6 +17,15 @@ import {
 } from "./lib/validators";
 
 const credentials = { access: v.string(), code: v.string(), token: v.string() };
+const navigationArgs = {
+  ...credentials,
+  expectedPhase: phaseValidator,
+  expectedIntroSlide: v.optional(v.number()),
+};
+function requireCurrentSlide(room: Doc<"rooms">, expectedSlide?: number) {
+  if (room.phase === "intro" && (room.introSlide ?? 0) !== expectedSlide)
+    throw new ConvexError("Die Einführung ist inzwischen auf einer anderen Folie.");
+}
 function clean(value: string, label: string, max: number, min = 1) {
   const result = value.trim();
   if (result.length < min || result.length > max)
@@ -80,6 +90,7 @@ export const create = mutation({
       code,
       hostToken: args.hostToken,
       phase: "lobby",
+      introSlide: 0,
       generation: 1,
       reflectionsRevealed: false,
     });
@@ -153,7 +164,7 @@ export const get = query({
         .collect(),
     ]);
     const index = PHASES.indexOf(room.phase);
-    const firstVisible = index >= 2 && room.phase !== "estimate2";
+    const firstVisible = index >= PHASES.indexOf("reveal1") && room.phase !== "estimate2";
     const secondVisible = index >= PHASES.indexOf("compare");
     const round = room.phase === "estimate2" || secondVisible ? 2 : 1;
     const safeVote = (vote: Doc<"votes">) => ({
@@ -167,6 +178,7 @@ export const get = query({
       access: "joined" as const,
       code: room.code,
       phase: room.phase,
+      introSlide: room.introSlide ?? 0,
       generation: room.generation,
       isHost,
       me: me ? { id: me._id, name: me.name } : null,
@@ -248,13 +260,19 @@ export const vote = mutation({
 });
 
 export const advance = mutation({
-  args: { ...credentials, expectedPhase: phaseValidator },
+  args: navigationArgs,
   handler: async (ctx, args) => {
     await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     if (room.phase !== args.expectedPhase)
       throw new ConvexError("Der Workshop ist inzwischen in einem anderen Schritt.");
+    requireCurrentSlide(room, args.expectedIntroSlide);
+    const introSlide = room.introSlide ?? 0;
+    if (room.phase === "intro" && introSlide < INTRO_SLIDES.length - 1) {
+      await ctx.db.patch(room._id, { introSlide: introSlide + 1 });
+      return;
+    }
     const index = PHASES.indexOf(room.phase);
     if (index === PHASES.length - 1)
       throw new ConvexError("Der Workshop ist bereits abgeschlossen.");
@@ -271,23 +289,33 @@ export const advance = mutation({
     }
     if (room.phase === "transfer" && !room.reflectionsRevealed)
       throw new ConvexError("Decke zuerst die Antworten auf.");
-    await ctx.db.patch(room._id, { phase: PHASES[index + 1] });
+    await ctx.db.patch(room._id, {
+      phase: PHASES[index + 1],
+      ...(room.phase === "lobby" ? { introSlide: 0 } : {}),
+    });
   },
 });
 
 export const retreat = mutation({
-  args: { ...credentials, expectedPhase: phaseValidator },
+  args: navigationArgs,
   handler: async (ctx, args) => {
     await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     if (room.phase !== args.expectedPhase)
       throw new ConvexError("Der Workshop ist inzwischen in einem anderen Schritt.");
+    requireCurrentSlide(room, args.expectedIntroSlide);
+    const introSlide = room.introSlide ?? 0;
+    if (room.phase === "intro" && introSlide > 0) {
+      await ctx.db.patch(room._id, { introSlide: introSlide - 1 });
+      return;
+    }
     const index = PHASES.indexOf(room.phase);
     if (index === 0)
       throw new ConvexError("Der Workshop ist bereits im ersten Schritt.");
     await ctx.db.patch(room._id, {
       phase: PHASES[index - 1],
+      ...(room.phase === "estimate1" ? { introSlide: INTRO_SLIDES.length - 1 } : {}),
       reflectionsRevealed: room.phase === "done" && room.reflectionsRevealed,
     });
   },
@@ -394,6 +422,7 @@ export const reset = mutation({
     await clearRound(ctx, room);
     await ctx.db.patch(room._id, {
       phase: "lobby",
+      introSlide: 0,
       reflectionsRevealed: false,
       generation: room.generation + 1,
     });

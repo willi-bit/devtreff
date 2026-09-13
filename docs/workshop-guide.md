@@ -1,25 +1,30 @@
 # Dein Workshop entlang der App
 
 Die App führt durch die Session. Du moderierst Gespräche, gibst Phasen frei und
-zeigst einmal die Codeanalyse im Coding-Agent. Zusätzliche Folien sind für diesen
-Ablauf nicht nötig. Das [Sprechskript](vortrags-skript.md) enthält Formulierungen
+zeigst einmal die Codeanalyse im Coding-Agent. Vor dem Übungsticket führt ihr
+gemeinsam durch neun Folien direkt in der Website. Das [Sprechskript](vortrags-skript.md) enthält Formulierungen
 und Zeitreserven. Die App zeigt dir und den Kollegen die jeweiligen Aufträge.
 
-## Vorschlag für 55 Minuten
+## Vorschlag für 65 Minuten
+
+Die Einführung ergänzt den bisherigen Ablauf um etwa zehn Minuten. Bei einem
+festen 55-Minuten-Slot die Gesprächsimpulse der Folien nur punktuell aufgreifen
+und den späteren Input zu KI und Lieferzeit auf einen kurzen Rückbezug begrenzen.
 
 | Zeit  | In der App          | Dein Fokus                                                                                                                                                           |
 | ----- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0–5   | Ankommen            | Raum öffnen, Link teilen, Namen wählen. „Was steckt für euch hinter einer Schätzung?“                                                                                |
-| 5–11 | Erste Schätzung | ORD-42, Referenzen und Definition of Done kennenlernen. Alle geben Zahl und wichtigste Annahme verdeckt ab. |
-| 11–17 | Eure Annahmen | Zwei unterschiedliche Vorstellungen besprechen. Daraus entstehen Fragen. |
-| 17–21 | Welche Fragen sind offen? | Jede Person trägt eine Frage zu ihrer Annahme ein. Gemeinsam Schwerpunkte benennen. |
-| 21–26 | KI hinzuziehen | Du kopierst den Auftrag mit den Fragen der Runde in deinen Coding-Agent. Alle verfolgen die Ausgabe und prüfen mindestens einen Beleg. |
-| 26–29 | Ergebnisse prüfen | Zurück in der App: Antworten den Fragen zuordnen, Fakten und Annahmen festhalten. |
-| 29–32 | Produkt klären | Du gibst als Product Owner die vorbereiteten Antworten. Restfragen gemeinsam benennen. |
-| 32–39 | Neu einschätzen | Erneut unabhängig abstimmen und die Begründungen vergleichen. |
-| 39–44 | Kurzer Input | Bei der Vergleichsansicht erklären: Wie verändert schnellere Implementierung die gesamte Lieferzeit? |
-| 44–51 | In den Alltag | „Geht das bis Freitag? Ihr nutzt doch KI.“ Zwei Sätze pro Person, gemeinsam aufdecken und verbessern. |
-| 51–55 | Mitnehmen | Einen Versuch an drei echten Aufgaben vereinbaren. Ergebnisprotokoll herunterladen. |
+| 5–15 | Schätzgrundlagen | Neun Folien gemeinsam durchgehen: Begriffe, vollständiger Aufwand, neue Projekte und Kundengespräche. |
+| 15–21 | Erste Schätzung | ORD-42, Referenzen und Definition of Done kennenlernen. Alle geben Zahl und wichtigste Annahme verdeckt ab. |
+| 21–27 | Eure Annahmen | Zwei unterschiedliche Vorstellungen besprechen. Daraus entstehen Fragen. |
+| 27–31 | Welche Fragen sind offen? | Jede Person trägt eine Frage zu ihrer Annahme ein. Gemeinsam Schwerpunkte benennen. |
+| 31–36 | KI hinzuziehen | Du kopierst den Auftrag mit den Fragen der Runde in deinen Coding-Agent. Alle verfolgen die Ausgabe und prüfen mindestens einen Beleg. |
+| 36–39 | Ergebnisse prüfen | Zurück in der App: Antworten den Fragen zuordnen, Fakten und Annahmen festhalten. |
+| 39–42 | Produkt klären | Du gibst als Product Owner die vorbereiteten Antworten. Restfragen gemeinsam benennen. |
+| 42–49 | Neu einschätzen | Erneut unabhängig abstimmen und die Begründungen vergleichen. |
+| 49–54 | Kurzer Input | Bei der Vergleichsansicht erklären: Wie verändert schnellere Implementierung die gesamte Lieferzeit? |
+| 54–61 | In den Alltag | „Geht das bis Freitag? Ihr nutzt doch KI.“ Zwei Sätze pro Person, gemeinsam aufdecken und verbessern. |
+| 61–65 | Mitnehmen | Einen Versuch an drei echten Aufgaben vereinbaren. Ergebnisprotokoll herunterladen. |
 
 ## Vorbereiten
 
@@ -37,6 +42,42 @@ und Zeitreserven. Die App zeigt dir und den Kollegen die jeweiligen Aufträge.
 5. Das B2B-Beispiel unter `/demo` anschauen: Statusfilter, Pagination, Kunden-CSV
    sowie Admin-, Mitglied- und Mandantenwechsel sind vorbereitet. Alle Daten und
    Personas sind fiktiv. Der Bestellexport ist absichtlich eine offene Story.
+
+## Die gemeinsame Einführung
+
+Mit **Einführung starten** beginnt der Folienteil. **Nächste Folie** und
+**Vorherige Folie** steuern die Anzeige für die ganze Runde. Die Pfeiltasten
+funktionieren ebenfalls, wenn der Fokus im Folieninhalt liegt. Eingabefelder,
+Links, Buttons und offene Dialoge behalten ihre eigene Tastaturbedienung.
+Teilnehmende folgen automatisch; auch ein späterer Beitritt oder Neuladen zeigt
+die aktuelle Folie. Die letzte Folie führt mit **Zur ersten Schätzung** zu ORD-42.
+
+| Folie | Kerngedanke | Späterer Bezug |
+| --- | --- | --- |
+| 1 | Zweck einer Schätzung: Priorität, Budgetrahmen oder Lieferplanung | Welche Entscheidung soll unsere Zahl ermöglichen? |
+| 2 | Aufwand, Kalenderdauer und Preis unterscheiden | Eine Point-Zahl beantwortet die Terminfrage noch nicht. |
+| 3 | Umfang, Akzeptanzkriterien, Definition of Done und Kundenmitwirkung | Alle vergleichen denselben Lieferumfang. |
+| 4 | Den ganzen Lieferweg betrachten | Klärung, Tests, Review und Auslieferung gehören dazu. |
+| 5 | Fakten, Annahmen und Risiken getrennt behandeln | Aus einer Annahme wird eine prüfbare Frage am Board. |
+| 6 | Neue Projekte eingrenzen, zerlegen, vergleichen und nachkalibrieren | Auch bei wenig Wissen eine begründete erste Orientierung geben. |
+| 7 | Im Kundengespräch Ziel, Prognose und Zusage benennen | Auf „Geht das bis Freitag?“ mit Voraussetzungen und nächstem Schritt antworten. |
+| 8 | Story Points als teambezogenen Vergleich nutzen | Unabhängig schätzen, begründen, gemeinsam aufdecken; „?“ ist erlaubt. |
+| 9 | Erst schätzen, gemeinsam klären, erneut schätzen | Rolle der KI und Übergang zur Übung. |
+
+Pro Folie ungefähr eine Minute einplanen. Gesprächsimpulse sind Angebote;
+für längere Erfahrungsberichte eine spätere Diskussion vormerken. Unter
+**Moderationshinweis** steht jeweils ein passender Sprechhinweis. Das
+Kundenbeispiel auf Folie 7 ist fiktiv; seine Zeitspanne gehört nicht zu ORD-42.
+Produktantworten und der Übungs-Scope werden weiterhin erst später freigegeben.
+
+Fachlicher Hintergrund: Die Schritte von Zweck und Umfang über Annahmen und
+Risiken bis zur Aktualisierung orientieren sich am
+[GAO Cost Estimating and Assessment Guide](https://www.gao.gov/products/gao-20-195g).
+Der gemeinsame Qualitätsstandard ist im
+[Scrum Guide](https://scrumguides.org/scrum-guide.html#commitment-definition-of-done)
+beschrieben. Die Einordnung des relativen Aufwands folgt
+[Mike Cohns Erklärung von Story Points](https://www.mountaingoatsoftware.com/agile/what-are-story-points).
+Kundenbeispiele und Gesprächsformulierungen sind für diesen Workshop erstellt.
 
 ## Die KI-Sequenz
 
@@ -80,6 +121,9 @@ prüft die Person ihre ursprüngliche Einschätzung erneut.
   Terminantworten bleiben erhalten. Zurück in einer Schätzrunde sind die Stimmen
   wieder verdeckt und änderbar. Gehst du vor die Transferrunde zurück, werden auch
   die Terminantworten beim erneuten Betreten wieder verdeckt gesammelt.
+- Aus der ersten Schätzrunde führt der Rückweg zur letzten Einstiegsfolie.
+  Von der ersten Folie geht es mit **Zum Ankommen** zurück in die Lobby.
+  Ein erneuter Start der Einführung und ein Workshop-Neustart beginnen bei Folie 1.
 - Die erste eigene Zahl nicht vorab nennen. Auch du kannst verdeckte Stimmen
   anderer Teilnehmender nicht über die App abrufen.
 - Erst aufdecken, wenn die Runde bereit ist. Der Zähler zeigt abgegebene Stimmen,

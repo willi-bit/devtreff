@@ -123,7 +123,7 @@ export function Home() {
         <section className="how-section" id="ablauf">
           <h2 className="sr-only">Der Ablauf</h2>
           <ol className="how-grid">
-            {["Schätzen", "Gemeinsam klären", "Neu schätzen"].map(
+            {["Grundlagen", "Schätzen", "Gemeinsam klären", "Neu schätzen"].map(
               (title, index) => (
                 <li className="how-card" key={title}>
                   <span aria-hidden="true">0{index + 1}</span>

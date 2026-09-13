@@ -38,9 +38,11 @@ import {
   useTask,
 } from "@/lib/browser";
 import { report, type Room } from "@/lib/room";
+import { INTRO_SLIDES } from "../../shared/introduction";
 import { useDemoAccess } from "./convex-client-provider";
 import { AppLoading, Avatar, Button, ErrorNote, Logo } from "./ui";
 import { AnalysisPanel, WorkshopGuidance } from "./workshop-guidance";
+import { WorkshopIntroduction } from "./workshop-introduction";
 import {
   LobbyPanel,
   RefinementPanel,
@@ -260,9 +262,11 @@ function Workspace({ room, token }: { room: Room; token: string }) {
   const connection = useConvexConnectionState();
   const task = useTask();
   const phase = PHASE_COPY[room.phase];
+  const introducing = room.phase === "intro";
+  const introSlide = INTRO_SLIDES[room.introSlide];
   const currentStep = stepIndex(room.phase);
   const heading = useRef<HTMLHeadingElement>(null);
-  const phaseKey = `${room.generation}-${room.phase}`;
+  const phaseKey = `${room.generation}-${room.phase}-${introducing ? room.introSlide : ""}`;
   const previousPhase = useRef(phaseKey);
   useEffect(() => {
     if (previousPhase.current !== phaseKey) {
@@ -278,6 +282,31 @@ function Workspace({ room, token }: { room: Room; token: string }) {
   const progress = room.members.length
     ? (room.votedCount / room.members.length) * 100
     : 0;
+  const navigationArgs = {
+    access,
+    code: room.code,
+    token,
+    expectedPhase: room.phase,
+    expectedIntroSlide: introducing ? room.introSlide : undefined,
+  };
+  const goBack = () => void task.run(() => retreat(navigationArgs));
+  const goForward = () => void task.run(() => advance(navigationArgs));
+  const navigation = room.isHost && (
+    <div className="phase-actions">
+      {room.phase !== "lobby" && (
+        <Button variant="secondary" onClick={goBack} busy={task.busy}>
+          <ArrowLeft size={17} />
+          {introducing ? room.introSlide === 0 ? "Zum Ankommen" : "Vorherige Folie" : "Einen Schritt zurück"}
+        </Button>
+      )}
+      {room.phase !== "done" && (
+        <Button onClick={goForward} busy={task.busy} disabled={!canAdvance}>
+          {introducing && room.introSlide === INTRO_SLIDES.length - 1 ? "Zur ersten Schätzung" : phase.action}
+          <ArrowRight size={17} />
+        </Button>
+      )}
+    </div>
+  );
   function resetRound() {
     if (
       window.confirm(
@@ -287,7 +316,20 @@ function Workspace({ room, token }: { room: Room; token: string }) {
       void task.run(() => reset({ access, code: room.code, token }));
   }
   return (
-    <div className="workspace">
+    <div
+      className={`workspace${introducing ? " workspace-intro" : ""}`}
+      onKeyDown={(event) => {
+        if (!introducing || !room.isHost || task.busy || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (!(event.target instanceof Element) || event.target.closest("input, textarea, select, button, a, summary, dialog, [contenteditable]")) return;
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          goBack();
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          goForward();
+        }
+      }}
+    >
       <header className="workspace-header">
         <div className="workspace-brand">
           <Logo />
@@ -340,59 +382,23 @@ function Workspace({ room, token }: { room: Room; token: string }) {
         </aside>
         <main className="workshop-main">
           <div className="phase-heading">
-            <h1 ref={heading} tabIndex={-1}>
+            <h1
+              ref={heading}
+              tabIndex={-1}
+              aria-label={introducing ? `${phase.title}: Folie ${room.introSlide + 1} von ${INTRO_SLIDES.length}. ${introSlide.title}` : undefined}
+            >
               {phase.title}
             </h1>
-            {room.isHost && (
-              <div className="phase-actions">
-                {room.phase !== "lobby" && (
-                  <Button
-                    variant="secondary"
-                    onClick={() =>
-                      void task.run(() =>
-                        retreat({
-                          access,
-                          code: room.code,
-                          token,
-                          expectedPhase: room.phase,
-                        }),
-                      )
-                    }
-                    busy={task.busy}
-                  >
-                    <ArrowLeft size={17} />
-                    Einen Schritt zurück
-                  </Button>
-                )}
-                {room.phase !== "done" && (
-                  <Button
-                    onClick={() =>
-                      void task.run(() =>
-                        advance({
-                          access,
-                          code: room.code,
-                          token,
-                          expectedPhase: room.phase,
-                        }),
-                      )
-                    }
-                    busy={task.busy}
-                    disabled={!canAdvance}
-                  >
-                    {phase.action}
-                    <ArrowRight size={17} />
-                  </Button>
-                )}
-              </div>
-            )}
+            {!introducing && navigation}
           </div>
           <ErrorNote error={task.error} />
           <div
             className="phase-content"
-            key={`${room.generation}-${room.phase}`}
+            key={phaseKey}
           >
             <WorkshopGuidance room={room} />
             {room.phase === "lobby" && <LobbyPanel room={room} />}
+            {introducing && <WorkshopIntroduction slideIndex={room.introSlide} isHost={room.isHost} />}
             {room.phase === "estimate1" && (
               <VotePanel room={room} token={token} round={1} />
             )}
@@ -423,6 +429,12 @@ function Workspace({ room, token }: { room: Room; token: string }) {
               </>
             )}
           </div>
+          {introducing && room.isHost && (
+            <nav className="intro-controls" aria-label="Folien steuern">
+              <span className="fine-print">Folie {room.introSlide + 1} von {INTRO_SLIDES.length} · Pfeiltasten ← →</span>
+              {navigation}
+            </nav>
+          )}
           {(room.phase === "compare" || room.phase === "done") && (
             <button
               className="button button-secondary export-button"
@@ -482,12 +494,12 @@ function Workspace({ room, token }: { room: Room; token: string }) {
           </section>
           {room.isHost && (
             <>
-              <details className="panel moderator-notes" key={room.phase}>
+              <details className="panel moderator-notes" key={phaseKey}>
                 <summary>
                   Moderationshinweis
                   <ChevronDown size={15} />
                 </summary>
-                <p>{phase.cue}</p>
+                <p>{introducing ? introSlide.cue : phase.cue}</p>
               </details>
               <details className="session-options">
                 <summary>

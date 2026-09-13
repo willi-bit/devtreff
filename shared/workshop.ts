@@ -3,6 +3,7 @@ export type Point = (typeof POINTS)[number];
 
 export const PHASES = [
   "lobby",
+  "intro",
   "estimate1",
   "reveal1",
   "refine",
@@ -25,6 +26,7 @@ export function isRefinementPhase(phase: Phase): phase is RefinementPhase {
 
 export const STEPS = [
   { title: "Ankommen", phases: ["lobby"] },
+  { title: "Schätzgrundlagen", phases: ["intro"] },
   { title: "Erste Schätzung", phases: ["estimate1", "reveal1"] },
   { title: "Gemeinsam klären", phases: REFINEMENT_PHASES },
   { title: "Neu einschätzen", phases: ["estimate2", "compare"] },
@@ -42,8 +44,13 @@ export const PHASE_COPY: Record<
 > = {
   lobby: {
     title: "Wie groß ist das wirklich?",
-    action: "Runde starten",
-    cue: "Begrüße die Runde. Alle öffnen den Teilnehmerlink. Erkläre: Wir suchen eine begründete Einschätzung; es gibt keine vorbereitete richtige Zahl.",
+    action: "Einführung starten",
+    cue: "Begrüße die Runde und teile den Teilnehmerlink. Mit „Einführung starten“ beginnt ihr gemeinsam mit den Schätzgrundlagen. Deine Folienwechsel erscheinen bei allen Teilnehmenden.",
+  },
+  intro: {
+    title: "Schätzen im Projektalltag",
+    action: "Nächste Folie",
+    cue: "Führe die Runde durch die Grundlagen. Vor und zurück wechseln die Folien für alle gemeinsam. Plane etwa zehn Minuten und greife einzelne Fragen aus der Runde auf.",
   },
   estimate1: {
     title: "Erste Schätzung",
