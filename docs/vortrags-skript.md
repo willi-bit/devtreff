@@ -7,8 +7,9 @@ Interaktion mit zwei Schätzrunden ist ausdrücklich Teil des Vortrags.
 
 Grundlage sind die neun Einstiegsfolien in der App, ORD-42, die drei
 Referenzen, der Analyseauftrag, die vier PO-Antworten und die Abschlussfragen.
-Die Einführung verbindet Schätzgrundlagen mit neuen Consulting-Projekten
-und Kundengesprächen. Danach trägt die Exportaufgabe den roten Faden vom
+Die Einführung behandelt das Schätzen von Features, User Stories und Tasks
+im agilen Entwicklungsteam: Scrum-Ablauf, Story Points, Planning Poker und
+Umgang mit Unsicherheit. Danach trägt die Exportaufgabe den roten Faden vom
 unklaren Wunsch über begründete Einschätzungen bis zur Terminfrage.
 
 Die Sprechpassagen sind ein Gerüst zum freien Erklären. Die Zeitbudgets
@@ -33,7 +34,7 @@ Dein roter Faden:
 | Minute | Ansicht / Thema | Ergebnis dieses Abschnitts |
 | --- | --- | --- |
 | 0–5 | Ankommen und Einstieg | Die Runde erkennt die eigene Alltagssituation wieder. |
-| 5–15 | Schätzgrundlagen: neun gemeinsame Folien | Die Runde hat gemeinsame Begriffe und ein Vorgehen für neue Kundenprojekte. |
+| 5–15 | Schätzgrundlagen: neun gemeinsame Folien | Die Runde versteht Stories, Scrum-Ablauf, Story Points und Planning Poker. |
 | 15–21 | ORD-42, Referenzen, erste Schätzung | Jede Person hat unabhängig Zahl und Annahme abgegeben. |
 | 21–27 | Eure Annahmen | Zwei unterschiedliche Vorstellungen von derselben Aufgabe werden sichtbar. |
 | 27–31 | Welche Fragen sind offen? | Jede Person hat aus ihrer Annahme eine Frage gemacht. |
@@ -48,20 +49,18 @@ Dein roter Faden:
 **0–5 Minuten · Einstieg: eine Situation, die alle kennen**
 
 Zeige die Einladung zum Workshop. Eine Vorstellung deiner Person kann hier
-in zwei Sätze passen. Beginne inhaltlich mit der Terminfrage, die am Ende
-noch einmal auftaucht:
+in zwei Sätze passen. Beginne mit einer Situation aus dem Refinement:
 
-> „Geht das bis Freitag? Ihr nutzt doch jetzt KI.“ Vielleicht ist euch
-> dieser Satz schon begegnet. Mich interessiert, was wir darauf eigentlich
-> antworten können. Wir können heute Arbeit an eine KI abgeben, uns
-> bestehenden Code erklären lassen und Vorschläge prüfen. Gleichzeitig
-> müssen wir weiter einschätzen, was zu einer Aufgabe gehört und wann sie
-> wirklich fertig ist.
+> Wir schauen gemeinsam auf eine Story. Eine Person denkt: kleine Änderung.
+> Eine andere sieht sofort Sonderfälle, neue Tests und eine schwierige
+> Abhängigkeit. Beide lesen dasselbe Ticket – aber denken sie auch an
+> dieselbe Arbeit? Genau das macht Schätzen in der Softwareentwicklung
+> immer wieder schwierig.
 >
 > Ich möchte das mit euch an einer konkreten Aufgabe durchspielen. Ihr
 > schätzt zweimal, wir untersuchen die Annahmen hinter euren Zahlen und
 > ziehen eine KI zur Klärung hinzu. Zum Schluss formulieren wir eine
-> Antwort auf genau diese Freitagsfrage.
+> Antwort auf die Frage, was wir daraus für einen Termin ableiten können.
 
 Lass die Runde 30 Sekunden an eine eigene Erfahrung denken:
 
@@ -92,28 +91,29 @@ Folie. Die Folien enthalten jeweils einen Kerngedanken, kurze Beispiele und
 einen Gesprächsimpuls; dein **Moderationshinweis** ergänzt den Sprechtext.
 
 > Bevor wir gleich schätzen, möchte ich ein gemeinsames Verständnis schaffen.
-> Im Kundengespräch müssen wir häufig eine erste Orientierung geben, obwohl
-> noch vieles offen ist. Entscheidend ist, was unsere Aussage voraussetzt
-> und welche Entscheidung der Kunde damit treffen will.
+> Beim Refinement und Sprint Planning müssen wir die Größe einer Aufgabe
+> einschätzen, obwohl wir noch nicht jedes Detail kennen. Wir schauen uns
+> an, was zur Story gehört, wie wir mit Referenzen vergleichen und warum
+> die Diskussion hinter den Karten so wichtig ist.
 
 Führe entlang der neun Folien durch diese Gedanken:
 
-1. **Wozu schätzen?** Erst den Zweck klären: Priorität, Budgetrahmen oder Termin.
-2. **Welche Größe?** Aufwand, Kalenderdauer und Preis haben unterschiedliche Grundlagen.
-3. **Was heißt fertig?** Umfang, Ausschlüsse, Akzeptanzkriterien und Qualitätsstandard festhalten.
-4. **Welche Arbeit?** Den Lieferweg von Klärung und Einarbeitung bis zu Test und Übergabe betrachten.
-5. **Was ist unsicher?** Fakten belegen, Annahmen bestätigen lassen, Risiken und nächste Fragen benennen.
-6. **Wie im neuen Projekt?** Mit dem Lieferteam zerlegen, Referenzen vergleichen, Unbekannte untersuchen und Spannen aktualisieren.
-7. **Wie zum Kunden?** Am fiktiven Beispiel Ziel, Prognose und bewusste Zusage unterscheiden.
-8. **Wie in unserer Runde?** Story Points relativ vergleichen, unabhängig beginnen und die wichtigste Annahme nennen.
-9. **Wobei hilft KI?** Den vorhandenen Stand untersuchen; Produktentscheidungen und geprüfte Schlussfolgerungen verantworten wir.
+1. **Warum ist Schätzen schwierig?** Dasselbe Ticket löst verschiedene Vorstellungen aus.
+2. **Was schätzen wir?** Feature, User Story und technische Tasks anhand von Benachrichtigungen unterscheiden.
+3. **Wo passiert das?** Vom Refinement über Sprint Planning zum beispielhaften Sprintboard führen.
+4. **Was heißt fertig?** Umfang, Akzeptanzkriterien und Definition of Done klären.
+5. **Was zählt mit?** Die Entwicklungsarbeit einschließlich Tests, Integration, Risiken und Nacharbeit betrachten.
+6. **Wie vergleichen wir?** Referenz-Stories, Story Points und den gemeinsamen Teammaßstab erklären.
+7. **Wie läuft Planning Poker?** Verdeckt wählen, gemeinsam aufdecken, unterschiedliche Annahmen besprechen und erneut schätzen.
+8. **Was tun bei Unklarheit?** Nachfragen, kleinere nutzbare Stories schneiden oder eine technische Frage in einem Spike untersuchen.
+9. **Wie planen wir damit?** Sprint-Ziel, Kapazität und bisherige Lieferung berücksichtigen; zur Übung mit gemeinsamer KI-Klärung überleiten.
 
 Greife auf zwei oder drei Folien einen kurzen Beitrag auf. Die übrigen Fragen
 können als Denkimpuls stehen bleiben. Die neun Folien sind für ungefähr zehn
 Minuten gedacht; eine ausführliche Diskussion jeder Frage dauert länger.
 Die Quellen sind in den Folien und im [Leitfaden](workshop-guide.md) verlinkt.
 
-> Jetzt probieren wir das an einem kurzen Kundenwunsch aus. Achtet darauf,
+> Jetzt probieren wir das an einer konkreten User Story aus. Achtet darauf,
 > welche Arbeit ihr einschließt und was ihr stillschweigend voraussetzt.
 > Genau diese Annahmen werden wir anschließend gemeinsam untersuchen.
 

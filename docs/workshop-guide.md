@@ -14,7 +14,7 @@ und den späteren Input zu KI und Lieferzeit auf einen kurzen Rückbezug begrenz
 | Zeit  | In der App          | Dein Fokus                                                                                                                                                           |
 | ----- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0–5   | Ankommen            | Raum öffnen, Link teilen, Namen wählen. „Was steckt für euch hinter einer Schätzung?“                                                                                |
-| 5–15 | Schätzgrundlagen | Neun Folien gemeinsam durchgehen: Begriffe, vollständiger Aufwand, neue Projekte und Kundengespräche. |
+| 5–15 | Schätzgrundlagen | Neun Folien gemeinsam durchgehen: Stories und Tasks, Scrum-Ablauf, Story Points, Planning Poker und Unsicherheit. |
 | 15–21 | Erste Schätzung | ORD-42, Referenzen und Definition of Done kennenlernen. Alle geben Zahl und wichtigste Annahme verdeckt ab. |
 | 21–27 | Eure Annahmen | Zwei unterschiedliche Vorstellungen besprechen. Daraus entstehen Fragen. |
 | 27–31 | Welche Fragen sind offen? | Jede Person trägt eine Frage zu ihrer Annahme ein. Gemeinsam Schwerpunkte benennen. |
@@ -54,30 +54,35 @@ die aktuelle Folie. Die letzte Folie führt mit **Zur ersten Schätzung** zu ORD
 
 | Folie | Kerngedanke | Späterer Bezug |
 | --- | --- | --- |
-| 1 | Zweck einer Schätzung: Priorität, Budgetrahmen oder Lieferplanung | Welche Entscheidung soll unsere Zahl ermöglichen? |
-| 2 | Aufwand, Kalenderdauer und Preis unterscheiden | Eine Point-Zahl beantwortet die Terminfrage noch nicht. |
-| 3 | Umfang, Akzeptanzkriterien, Definition of Done und Kundenmitwirkung | Alle vergleichen denselben Lieferumfang. |
-| 4 | Den ganzen Lieferweg betrachten | Klärung, Tests, Review und Auslieferung gehören dazu. |
-| 5 | Fakten, Annahmen und Risiken getrennt behandeln | Aus einer Annahme wird eine prüfbare Frage am Board. |
-| 6 | Neue Projekte eingrenzen, zerlegen, vergleichen und nachkalibrieren | Auch bei wenig Wissen eine begründete erste Orientierung geben. |
-| 7 | Im Kundengespräch Ziel, Prognose und Zusage benennen | Auf „Geht das bis Freitag?“ mit Voraussetzungen und nächstem Schritt antworten. |
-| 8 | Story Points als teambezogenen Vergleich nutzen | Unabhängig schätzen, begründen, gemeinsam aufdecken; „?“ ist erlaubt. |
-| 9 | Erst schätzen, gemeinsam klären, erneut schätzen | Rolle der KI und Übergang zur Übung. |
+| 1 | Dasselbe Ticket kann unterschiedliche Vorstellungen auslösen. | Hinter jeder Zahl stehen Arbeit und Annahmen. |
+| 2 | Feature, User Story und Tasks an einem Beispiel unterscheiden. | Wir schätzen eine ganze Story und berücksichtigen ihre Umsetzungsschritte. |
+| 3 | Refinement, Sprint Planning und ein beispielhaftes Sprintboard einordnen. | Schätzen unterstützt die Planung; das Board zeigt den Arbeitsstand. |
+| 4 | Umfang, Akzeptanzkriterien und Definition of Done klären. | Alle betrachten dieselbe Aufgabe und denselben Qualitätsstandard. |
+| 5 | Arbeitsmenge, Komplexität, Tests, Integration und Risiken berücksichtigen. | Der Aufwand reicht bis zum fertigen Ergebnis. |
+| 6 | Story Points mit Referenz-Stories und einer gemeinsamen Skala nutzen. | Die fiktiven Teamreferenzen dienen gleich als Vergleichsbasis. |
+| 7 | Planning Poker: unabhängig wählen, aufdecken, Unterschiede erklären, erneut wählen. | Die App bewahrt die Einzelstimmen für den Vergleich beider Runden. |
+| 8 | Bei Unklarheit weiter klären, Stories schneiden oder einen Spike vereinbaren. | Aus einer Annahme entsteht eine konkrete Rückfrage. |
+| 9 | Sprint-Ziel, Kapazität, bisherige Lieferung und Abhängigkeiten zusammen betrachten. | Übergang zur Übung und später zur Frage „Geht das bis Freitag?“. |
 
 Pro Folie ungefähr eine Minute einplanen. Gesprächsimpulse sind Angebote;
 für längere Erfahrungsberichte eine spätere Diskussion vormerken. Unter
-**Moderationshinweis** steht jeweils ein passender Sprechhinweis. Das
-Kundenbeispiel auf Folie 7 ist fiktiv; seine Zeitspanne gehört nicht zu ORD-42.
+**Moderationshinweis** steht jeweils ein passender Sprechhinweis. Die
+Benachrichtigungs-Story und die Karten im Sprintboard sind eigene Beispiele.
 Produktantworten und der Übungs-Scope werden weiterhin erst später freigegeben.
 
-Fachlicher Hintergrund: Die Schritte von Zweck und Umfang über Annahmen und
-Risiken bis zur Aktualisierung orientieren sich am
-[GAO Cost Estimating and Assessment Guide](https://www.gao.gov/products/gao-20-195g).
-Der gemeinsame Qualitätsstandard ist im
-[Scrum Guide](https://scrumguides.org/scrum-guide.html#commitment-definition-of-done)
-beschrieben. Die Einordnung des relativen Aufwands folgt
-[Mike Cohns Erklärung von Story Points](https://www.mountaingoatsoftware.com/agile/what-are-story-points).
-Kundenbeispiele und Gesprächsformulierungen sind für diesen Workshop erstellt.
+Fachlicher Hintergrund: Der [Scrum Guide](https://scrumguides.org/scrum-guide.html)
+beschreibt Refinement, Sprint Planning und die Definition of Done. Die Developers
+verantworten die Größenabschätzung. Story Points, Planning Poker, ein bestimmtes
+Board und eine Feature–Story–Task-Hierarchie sind ergänzende Praktiken, die Scrum
+nicht vorschreibt.
+
+Die Schätzmethode erläutern Mike Cohns Texte zu
+[Story Points](https://www.mountaingoatsoftware.com/agile/what-are-story-points)
+und [Planning Poker](https://www.mountaingoatsoftware.com/agile/story-points/planning-poker).
+Die Agile Alliance erklärt
+[User Stories](https://agilealliance.org/glossary/user-stories/)
+und [Story Splitting](https://agilealliance.org/glossary/story-splitting/).
+Die konkreten Beispiele und Gesprächsimpulse sind für diesen Workshop erstellt.
 
 ## Die KI-Sequenz
 

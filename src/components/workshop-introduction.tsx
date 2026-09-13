@@ -28,12 +28,6 @@ export function WorkshopIntroduction({
       </div>
       <h2 id="intro-slide-heading">{slide.title}</h2>
       <p className="intro-lead">{slide.lead}</p>
-      {slide.quote && (
-        <figure className="intro-quote">
-          <figcaption>{slide.quote.label}</figcaption>
-          <blockquote>{slide.quote.text}</blockquote>
-        </figure>
-      )}
       <div className={`intro-cards intro-cards-${slide.cards.length}`}>
         {slide.cards.map((card, index) => (
           <article className="intro-card" key={card.title}>
@@ -43,6 +37,19 @@ export function WorkshopIntroduction({
           </article>
         ))}
       </div>
+      {slide.board && (
+        <figure className="intro-board">
+          <figcaption>Beispiel für ein Sprintboard · jede Karte ist eine eigene Story</figcaption>
+          <div className="intro-board-columns">
+            {slide.board.map((column) => (
+              <div className="intro-board-column" key={column.title}>
+                <h3>{column.title}</h3>
+                <p>{column.item}</p>
+              </div>
+            ))}
+          </div>
+        </figure>
+      )}
       <p className="intro-takeaway">{slide.takeaway}</p>
       <div className="intro-prompt">
         <MessageCircle size={18} aria-hidden="true" />

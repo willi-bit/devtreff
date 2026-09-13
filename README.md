@@ -8,7 +8,7 @@ Coding-Agent neben der App statt.
 ## Enthalten
 
 - Räume mit Teilnehmerlink, QR-Code und getrennten Moderationszugängen
-- Neun synchron moderierte Einstiegsfolien zu Schätzgrundlagen und Consulting, vor dem Übungsticket
+- Neun synchron moderierte Einstiegsfolien zu agiler Softwareentwicklung: Stories, Sprintboard, Story Points und Planning Poker
 - Verdeckte Schätzung mit Story Points und einer persönlichen Begründung
 - Gemeinsames Aufdecken und Vergleich beider Runden
 - Fragenboard mit geprüften Fakten, Annahmen und Belegstellen

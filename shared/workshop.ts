@@ -48,7 +48,7 @@ export const PHASE_COPY: Record<
     cue: "Begrüße die Runde und teile den Teilnehmerlink. Mit „Einführung starten“ beginnt ihr gemeinsam mit den Schätzgrundlagen. Deine Folienwechsel erscheinen bei allen Teilnehmenden.",
   },
   intro: {
-    title: "Schätzen im Projektalltag",
+    title: "Schätzen im agilen Team",
     action: "Nächste Folie",
     cue: "Führe die Runde durch die Grundlagen. Vor und zurück wechseln die Folien für alle gemeinsam. Plane etwa zehn Minuten und greife einzelne Fragen aus der Runde auf.",
   },

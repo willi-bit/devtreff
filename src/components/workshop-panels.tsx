@@ -104,14 +104,14 @@ export function LobbyPanel({ room }: { room: Room }) {
         </p>
       )}
       <section className="panel intro-welcome" aria-labelledby="welcome-heading">
-        <span className="eyebrow">Schätzen im Consulting</span>
+        <span className="eyebrow">Agile Softwareentwicklung</span>
         <h2 id="welcome-heading">Bevor wir eine Zahl nennen.</h2>
-        <p>Was müssen wir über eine Aufgabe wissen, um sie sinnvoll zu schätzen?
-          Wir starten mit den Grundlagen und wenden sie danach gemeinsam an.</p>
+        <p>Wie schätzen wir Stories, Features und Tasks im agilen Team?
+          Wir starten mit Backlog, Story Points und Planning Poker und wenden die Grundlagen danach gemeinsam an.</p>
         <ol>
-          <li><strong>Ein gemeinsames Verständnis</strong><span>{INTRO_SLIDES.length} kurze Folien zu Umfang, Aufwand, Unsicherheit und Kundengesprächen · ca. 10 Minuten.</span></li>
+          <li><strong>Ein gemeinsames Verständnis</strong><span>{INTRO_SLIDES.length} kurze Folien zu Scrum, Story Points, Planning Poker und Unsicherheit · ca. 10 Minuten.</span></li>
           <li><strong>Eine Aufgabe, zwei Schätzungen</strong><span>Annahmen sichtbar machen, Fragen klären und KI zur Codeanalyse hinzuziehen.</span></li>
-          <li><strong>Zurück in den Kundenalltag</strong><span>Eine begründete Antwort auf „Geht das bis Freitag?“ formulieren.</span></li>
+          <li><strong>In den nächsten Sprint mitnehmen</strong><span>Begründeter planen und auf „Geht das bis Freitag?“ antworten.</span></li>
         </ol>
         <p className="fine-print">Die Moderation führt durch den Ablauf. Alle Folienwechsel erscheinen automatisch bei dir.</p>
       </section>
