@@ -8,6 +8,7 @@ Coding-Agent neben der App statt.
 ## Enthalten
 
 - Räume mit Teilnehmerlink, QR-Code und getrennten Moderationszugängen
+- Neun synchron moderierte Einstiegsfolien zu Schätzgrundlagen und Consulting, vor dem Übungsticket
 - Verdeckte Schätzung mit Story Points und einer persönlichen Begründung
 - Gemeinsames Aufdecken und Vergleich beider Runden
 - Fragenboard mit geprüften Fakten, Annahmen und Belegstellen
@@ -17,7 +18,7 @@ Coding-Agent neben der App statt.
 - Session-Neustart für Generalproben
 - Ein ausführbares, fiktives B2B-Beispiel mit Statusfilter, Pagination und Kunden-CSV
 
-**Den Vortrag vorbereiten:** [Moderationsleitfaden für 55 Minuten](docs/workshop-guide.md).
+**Den Vortrag vorbereiten:** [Moderationsleitfaden für 65 Minuten](docs/workshop-guide.md).
 
 ## Lokal starten
 
@@ -118,6 +119,7 @@ Browseransichten gegen das echte Entwicklungsbackend durchspielen.
 - `src/app/`: Next.js App Router und Styles
 - `src/components/`: Startseite, Workshop-Ansichten und B2B-Oberfläche
 - `shared/workshop.ts`: Phasen, Texte, Startticket, Referenzen und Analyseauftrag
+- `shared/introduction.ts`: Einstiegsfolien, Gesprächsimpulse, Moderationshinweise und Quellen
 - `convex/rooms.ts`: gemeinsame Session mit serverseitigen Freigaben
 - `convex/schema.ts`: Räume, Teilnehmende, Stimmen, Erkenntnisse und Terminantworten
 - `convex/lib/answers.ts`: vorbereitetes Moderationsmaterial

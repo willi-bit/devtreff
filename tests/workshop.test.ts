@@ -5,6 +5,7 @@ import { api } from "../convex/_generated/api";
 import schema from "../convex/schema";
 import { createDemoAccess } from "../shared/demo-access";
 import { PHASES } from "../shared/workshop";
+import { INTRO_SLIDES } from "../shared/introduction";
 
 let access: string;
 beforeAll(async () => {
@@ -35,6 +36,111 @@ async function workshop() {
   return { t, code, host, alice, bob };
 }
 
+async function finishIntroduction(
+  t: Awaited<ReturnType<typeof workshop>>["t"],
+  code: string,
+  host: string,
+) {
+  for (let introSlide = 0; introSlide < INTRO_SLIDES.length; introSlide++) {
+    await t.mutation(api.rooms.advance, {
+      access, code, token: host, expectedPhase: "intro", expectedIntroSlide: introSlide,
+    });
+  }
+}
+
+describe("Synchronized introduction", () => {
+  test("only the host changes the shared slide; late arrivals see the current slide", async () => {
+    const { t, code, host, alice, bob } = await workshop();
+    const credentials = { access, code, token: host };
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "lobby" });
+    for (const token of [host, alice, bob]) {
+      expect(await t.query(api.rooms.get, { access, code, token })).toMatchObject({
+        phase: "intro", introSlide: 0, firstVotes: [], secondVotes: [],
+      });
+    }
+    for (const mutation of [api.rooms.advance, api.rooms.retreat]) {
+      await expect(t.mutation(mutation, {
+        access, code, token: alice, expectedPhase: "intro", expectedIntroSlide: 0,
+      })).rejects.toThrow("Nur die Moderation");
+    }
+    await expect(t.mutation(api.rooms.vote, {
+      access, code, token: alice, round: 1, point: "3", reason: "Too early",
+    })).rejects.toThrow("nicht geöffnet");
+    await t.mutation(api.rooms.advance, {
+      ...credentials, expectedPhase: "intro", expectedIntroSlide: 0,
+    });
+    for (const mutation of [api.rooms.advance, api.rooms.retreat]) {
+      for (const expectedIntroSlide of [undefined, 0, -1, 1.5, INTRO_SLIDES.length]) {
+        await expect(t.mutation(mutation, {
+          ...credentials, expectedPhase: "intro", expectedIntroSlide,
+        })).rejects.toThrow("anderen Folie");
+      }
+    }
+    const lateArrival = crypto.randomUUID();
+    await t.mutation(api.rooms.join, { access, code, token: lateArrival, name: "Charlie" });
+    expect(await t.query(api.rooms.get, { access, code, token: lateArrival })).toMatchObject({
+      phase: "intro", introSlide: 1, answers: [],
+    });
+    await t.mutation(api.rooms.retreat, {
+      ...credentials, expectedPhase: "intro", expectedIntroSlide: 1,
+    });
+    for (const token of [host, alice, bob, lateArrival]) {
+      expect(await t.query(api.rooms.get, { access, code, token })).toMatchObject({
+        phase: "intro", introSlide: 0,
+      });
+    }
+  });
+
+  test("the last slide opens estimation and returning to the introduction preserves hidden votes", async () => {
+    const { t, code, host, alice, bob } = await workshop();
+    const credentials = { access, code, token: host };
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "lobby" });
+    await finishIntroduction(t, code, host);
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({ phase: "estimate1" });
+    await t.mutation(api.rooms.vote, {
+      access, code, token: alice, round: 1, point: "8", reason: "PRIVATE original assumption",
+    });
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "estimate1" });
+    await t.mutation(api.rooms.retreat, { ...credentials, expectedPhase: "reveal1" });
+    await t.mutation(api.rooms.retreat, { ...credentials, expectedPhase: "estimate1" });
+    for (const token of [host, bob]) {
+      const view = await t.query(api.rooms.get, { access, code, token });
+      expect(view).toMatchObject({
+        phase: "intro", introSlide: INTRO_SLIDES.length - 1, firstVotes: [], secondVotes: [],
+      });
+      expect(JSON.stringify(view)).not.toContain("PRIVATE");
+    }
+    await t.mutation(api.rooms.advance, {
+      ...credentials, expectedPhase: "intro", expectedIntroSlide: INTRO_SLIDES.length - 1,
+    });
+    expect(await t.query(api.rooms.get, { access, code, token: alice })).toMatchObject({
+      phase: "estimate1", firstVotes: [], ownVotes: [{ point: "8", reason: "PRIVATE original assumption" }],
+    });
+  });
+
+  test("existing rooms default to the first slide and reset restarts the introduction for everyone", async () => {
+    const { t, code, host, alice } = await workshop();
+    const credentials = { access, code, token: host };
+    await t.run(async (ctx) => {
+      const room = await ctx.db.query("rooms").unique();
+      await ctx.db.patch(room!._id, { introSlide: undefined });
+    });
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({ phase: "lobby", introSlide: 0 });
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "lobby" });
+    for (const introSlide of [0, 1, 2]) {
+      await t.mutation(api.rooms.advance, {
+        ...credentials, expectedPhase: "intro", expectedIntroSlide: introSlide,
+      });
+    }
+    await t.mutation(api.rooms.reset, credentials);
+    expect(await t.query(api.rooms.get, { access, code, token: alice })).toMatchObject({
+      phase: "lobby", introSlide: 0, generation: 2, me: { name: "Alice" },
+    });
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "lobby" });
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({ phase: "intro", introSlide: 0 });
+  });
+});
+
 describe("Independent estimation and moderator control", () => {
   test("votes stay secret from other participants and the host until reveal", async () => {
     const { t, code, host, alice, bob } = await workshop();
@@ -46,6 +152,7 @@ describe("Independent estimation and moderator control", () => {
       token: host,
       expectedPhase: "lobby",
     });
+    await finishIntroduction(t, code, host);
     await t.mutation(api.rooms.vote, {
       access,
       code,
@@ -132,6 +239,7 @@ describe("Independent estimation and moderator control", () => {
       token: host,
       expectedPhase: "lobby",
     });
+    await finishIntroduction(t, code, host);
     await expect(
       t.mutation(api.rooms.advance, {
         access,
@@ -192,6 +300,7 @@ describe("Independent estimation and moderator control", () => {
       token: host,
       expectedPhase: "lobby",
     });
+    await finishIntroduction(t, code, host);
     await t.mutation(api.rooms.vote, {
       access,
       code,
@@ -471,6 +580,7 @@ describe("Independent estimation and moderator control", () => {
     ).toMatchObject({
       phase: "lobby",
       generation: 2,
+      introSlide: 0,
       reflectionCount: 0,
       reflections: [],
       ownReflection: null,
@@ -495,23 +605,26 @@ describe("Stepping back through the workshop", () => {
       t.mutation(api.rooms.retreat, {
         ...credentials,
         token: alice,
-        expectedPhase: "estimate1",
+        expectedPhase: "intro",
+        expectedIntroSlide: 0,
       }),
     ).rejects.toThrow("Nur die Moderation");
     await expect(
       t.mutation(api.rooms.retreat, {
         ...credentials,
         access: "",
-        expectedPhase: "estimate1",
+        expectedPhase: "intro",
+        expectedIntroSlide: 0,
       }),
     ).rejects.toThrow("Veranstaltungspasswort");
     await t.mutation(api.rooms.retreat, {
       ...credentials,
-      expectedPhase: "estimate1",
+      expectedPhase: "intro",
+      expectedIntroSlide: 0,
     });
     for (const mutation of [api.rooms.retreat, api.rooms.advance]) {
       await expect(
-        t.mutation(mutation, { ...credentials, expectedPhase: "estimate1" }),
+        t.mutation(mutation, { ...credentials, expectedPhase: "intro", expectedIntroSlide: 0 }),
       ).rejects.toThrow("inzwischen in einem anderen Schritt");
     }
     expect(await t.query(api.rooms.get, credentials)).toMatchObject({ phase: "lobby" });
@@ -560,6 +673,10 @@ describe("Stepping back through the workshop", () => {
     const credentials = { access, code, token: host };
     const participant = { access, code, token: alice };
     for (const phase of PHASES.slice(0, -1)) {
+      if (phase === "intro") {
+        await finishIntroduction(t, code, host);
+        continue;
+      }
       if (phase === "estimate1" || phase === "estimate2") {
         await t.mutation(api.rooms.vote, {
           ...participant,
@@ -583,9 +700,17 @@ describe("Stepping back through the workshop", () => {
     }
     const completed = await t.query(api.rooms.get, credentials);
     for (let index = PHASES.length - 1; index > 0; index--) {
-      await t.mutation(api.rooms.retreat, {
-        ...credentials, expectedPhase: PHASES[index],
-      });
+      if (PHASES[index] === "intro") {
+        for (let introSlide = INTRO_SLIDES.length - 1; introSlide >= 0; introSlide--) {
+          await t.mutation(api.rooms.retreat, {
+            ...credentials, expectedPhase: "intro", expectedIntroSlide: introSlide,
+          });
+        }
+      } else {
+        await t.mutation(api.rooms.retreat, {
+          ...credentials, expectedPhase: PHASES[index],
+        });
+      }
       expect(await t.query(api.rooms.get, participant)).toMatchObject({
         phase: PHASES[index - 1],
         generation: 1,
@@ -599,6 +724,10 @@ describe("Stepping back through the workshop", () => {
       phase: "lobby", firstVotes: [], secondVotes: [], insights: [], reflections: [],
     });
     for (const phase of PHASES.slice(0, -1)) {
+      if (phase === "intro") {
+        await finishIntroduction(t, code, host);
+        continue;
+      }
       if (phase === "review") {
         expect(await t.query(api.rooms.get, participant)).toMatchObject({
           answers: [], insights: [{ text: "Does CSV suffice?" }],

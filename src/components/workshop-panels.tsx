@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { api } from "@convex/_generated/api";
 import { POINTS, REFERENCES, STORY, isRefinementPhase, type Point } from "../../shared/workshop";
+import { INTRO_SLIDES } from "../../shared/introduction";
 import { useTask } from "@/lib/browser";
 import type { Room, Vote } from "@/lib/room";
 import { Avatar, Button, DemoLink, ErrorNote } from "./ui";
@@ -99,11 +100,21 @@ export function LobbyPanel({ room }: { room: Room }) {
     <>
       {!room.isHost && (
         <p className="lobby-status" role="status">
-          <span className="live-dot" /> Warten auf den Start
+          <span className="live-dot" /> Gleich startet die gemeinsame Einführung
         </p>
       )}
-      <StoryPanel />
-      <ReferencePanel collapsible />
+      <section className="panel intro-welcome" aria-labelledby="welcome-heading">
+        <span className="eyebrow">Schätzen im Consulting</span>
+        <h2 id="welcome-heading">Bevor wir eine Zahl nennen.</h2>
+        <p>Was müssen wir über eine Aufgabe wissen, um sie sinnvoll zu schätzen?
+          Wir starten mit den Grundlagen und wenden sie danach gemeinsam an.</p>
+        <ol>
+          <li><strong>Ein gemeinsames Verständnis</strong><span>{INTRO_SLIDES.length} kurze Folien zu Umfang, Aufwand, Unsicherheit und Kundengesprächen · ca. 10 Minuten.</span></li>
+          <li><strong>Eine Aufgabe, zwei Schätzungen</strong><span>Annahmen sichtbar machen, Fragen klären und KI zur Codeanalyse hinzuziehen.</span></li>
+          <li><strong>Zurück in den Kundenalltag</strong><span>Eine begründete Antwort auf „Geht das bis Freitag?“ formulieren.</span></li>
+        </ol>
+        <p className="fine-print">Die Moderation führt durch den Ablauf. Alle Folienwechsel erscheinen automatisch bei dir.</p>
+      </section>
     </>
   );
 }

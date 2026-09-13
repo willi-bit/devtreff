@@ -1,33 +1,20 @@
 **Schätzen mit KI – Sprechskript für einen interaktiven Vortrag**
 
-Geplant für 55 Minuten mit einer kleinen Entwicklerrunde. Bei einem
-60-Minuten-Slot bleiben fünf Minuten für Fragen oder Verzögerungen. Die
+Geplant für 65 Minuten mit einer kleinen Entwicklerrunde, einschließlich
+zehn Minuten gemeinsamer Einstiegsfolien. Bei einem 70-Minuten-Slot bleiben
+fünf Minuten für Fragen oder Verzögerungen. Die
 Interaktion mit zwei Schätzrunden ist ausdrücklich Teil des Vortrags.
 
-Grundlage sind die vorhandenen Workshop-Texte, ORD-42, die drei Referenzen,
-der Analyseauftrag, die vier PO-Antworten und die Abschlussfragen. Ein im
-bisherigen Leitfaden erwähntes Foliendeck lag für diese Durchsicht nicht vor.
+Grundlage sind die neun Einstiegsfolien in der App, ORD-42, die drei
+Referenzen, der Analyseauftrag, die vier PO-Antworten und die Abschlussfragen.
+Die Einführung verbindet Schätzgrundlagen mit neuen Consulting-Projekten
+und Kundengesprächen. Danach trägt die Exportaufgabe den roten Faden vom
+unklaren Wunsch über begründete Einschätzungen bis zur Terminfrage.
 
-**Passt der Inhalt?**
-
-Ja. Die Exportaufgabe trägt einen roten Faden vom unklaren Wunsch über
-begründete Einschätzungen bis zur Terminfrage. Besonders brauchbar sind die
-verdeckten Abstimmungen, die Begründung zu jeder Zahl, die gemeinsame
-Definition of Done und die Trennung zwischen Fakten, Annahmen und Fragen.
-
-Der bisherige Ablauf enthält allerdings mehr Moderationsanlässe als
-ausformulierten Vortragsstoff. Wer die Texte erklärt, abstimmen lässt und
-zügig weitergeht, kann deutlich vor Ablauf einer Stunde fertig sein.
-Etwa 20–30 Minuten erscheinen dafür als grobe Planungsschätzung plausibel;
-das ist keine gemessene Vortragsdauer. Der bisherige 55-Minuten-Plan setzt
-relativ ergiebige Gespräche voraus.
-
-Dieses Skript ergänzt deshalb drei Erklärstücke: Was eine Schätzung
-beschreibt, welchen Beitrag die KI leisten soll und wie veränderte
-Entwicklungsarbeit in eine Terminprognose eingeht. Dazu kommen begrenzte
-Schreib- und Gesprächsaufträge. Die Zeit entsteht aus konkreter Arbeit an
-der Aufgabe. Die zitierten Sprechpassagen sind ein Gerüst zum freien
-Erklären; ihr bloßes Vorlesen füllt keine 55 Minuten.
+Die Sprechpassagen sind ein Gerüst zum freien Erklären. Die Zeitbudgets
+schließen kurze Beiträge, unabhängiges Schreiben und gemeinsame Klärung ein.
+Für einen festen 55-Minuten-Slot nennt der [Leitfaden](workshop-guide.md)
+Möglichkeiten zum Straffen.
 
 Zwei Grenzen des Inhalts solltest du ausdrücklich benennen: Runde zwei
 zeigt keine gemessene Schätzgenauigkeit und keinen isolierten KI-Effekt.
@@ -46,16 +33,17 @@ Dein roter Faden:
 | Minute | Ansicht / Thema | Ergebnis dieses Abschnitts |
 | --- | --- | --- |
 | 0–5 | Ankommen und Einstieg | Die Runde erkennt die eigene Alltagssituation wieder. |
-| 5–11 | ORD-42, Referenzen, erste Schätzung | Jede Person hat unabhängig Zahl und Annahme abgegeben. |
-| 11–17 | Eure Annahmen | Zwei unterschiedliche Vorstellungen von derselben Aufgabe werden sichtbar. |
-| 17–21 | Welche Fragen sind offen? | Jede Person hat aus ihrer Annahme eine Frage gemacht. |
-| 21–26 | Die KI zu euren Fragen hinzuziehen | Die Runde hat Antworten der Analyse und mindestens einen Beleg angesehen. |
-| 26–29 | Was haben wir herausgefunden? | Geprüfte Erkenntnisse sind den Fragen zugeordnet; Restfragen bleiben sichtbar. |
-| 29–32 | Was soll geliefert werden? | Vorbereitete Produktantworten ergänzen den technischen Wissensstand. |
-| 32–39 | Zweite Schätzung und Vergleich | Die Runde kann erklären, was sich geklärt oder bestätigt hat. |
-| 39–44 | KI bei der Umsetzung und Termine | Der Zusammenhang zwischen schnellerer Arbeit, Referenzen und Lieferzeit ist erklärt. |
-| 44–51 | „Geht das bis Freitag?“ | Es entstehen konkrete Antworten mit Bedingungen und nächstem Schritt. |
-| 51–55 | Mitnehmen | Jede Person wählt einen kleinen Versuch für den Arbeitsalltag. |
+| 5–15 | Schätzgrundlagen: neun gemeinsame Folien | Die Runde hat gemeinsame Begriffe und ein Vorgehen für neue Kundenprojekte. |
+| 15–21 | ORD-42, Referenzen, erste Schätzung | Jede Person hat unabhängig Zahl und Annahme abgegeben. |
+| 21–27 | Eure Annahmen | Zwei unterschiedliche Vorstellungen von derselben Aufgabe werden sichtbar. |
+| 27–31 | Welche Fragen sind offen? | Jede Person hat aus ihrer Annahme eine Frage gemacht. |
+| 31–36 | Die KI zu euren Fragen hinzuziehen | Die Runde hat Antworten der Analyse und mindestens einen Beleg angesehen. |
+| 36–39 | Was haben wir herausgefunden? | Geprüfte Erkenntnisse sind den Fragen zugeordnet; Restfragen bleiben sichtbar. |
+| 39–42 | Was soll geliefert werden? | Vorbereitete Produktantworten ergänzen den technischen Wissensstand. |
+| 42–49 | Zweite Schätzung und Vergleich | Die Runde kann erklären, was sich geklärt oder bestätigt hat. |
+| 49–54 | KI bei der Umsetzung und Termine | Der Zusammenhang zwischen schnellerer Arbeit, Referenzen und Lieferzeit ist erklärt. |
+| 54–61 | „Geht das bis Freitag?“ | Es entstehen konkrete Antworten mit Bedingungen und nächstem Schritt. |
+| 61–65 | Mitnehmen | Jede Person wählt einen kleinen Versuch für den Arbeitsalltag. |
 
 **0–5 Minuten · Einstieg: eine Situation, die alle kennen**
 
@@ -97,7 +85,41 @@ Zeitbudget: ungefähr zwei Minuten Einstieg, zwei Minuten Nachdenken und
 Beiträge, eine Minute Einordnung und Ankommen in der App. Eine längere
 Vorstellungsrunde aller Teilnehmenden ist darin nicht enthalten.
 
-**5–11 Minuten · Aufgabe verstehen und unabhängig schätzen**
+**5–15 Minuten · Die Grundlagen gemeinsam durchklicken**
+
+Klicke **Einführung starten**. Alle Teilnehmenden sehen synchron dieselbe
+Folie. Die Folien enthalten jeweils einen Kerngedanken, kurze Beispiele und
+einen Gesprächsimpuls; dein **Moderationshinweis** ergänzt den Sprechtext.
+
+> Bevor wir gleich schätzen, möchte ich ein gemeinsames Verständnis schaffen.
+> Im Kundengespräch müssen wir häufig eine erste Orientierung geben, obwohl
+> noch vieles offen ist. Entscheidend ist, was unsere Aussage voraussetzt
+> und welche Entscheidung der Kunde damit treffen will.
+
+Führe entlang der neun Folien durch diese Gedanken:
+
+1. **Wozu schätzen?** Erst den Zweck klären: Priorität, Budgetrahmen oder Termin.
+2. **Welche Größe?** Aufwand, Kalenderdauer und Preis haben unterschiedliche Grundlagen.
+3. **Was heißt fertig?** Umfang, Ausschlüsse, Akzeptanzkriterien und Qualitätsstandard festhalten.
+4. **Welche Arbeit?** Den Lieferweg von Klärung und Einarbeitung bis zu Test und Übergabe betrachten.
+5. **Was ist unsicher?** Fakten belegen, Annahmen bestätigen lassen, Risiken und nächste Fragen benennen.
+6. **Wie im neuen Projekt?** Mit dem Lieferteam zerlegen, Referenzen vergleichen, Unbekannte untersuchen und Spannen aktualisieren.
+7. **Wie zum Kunden?** Am fiktiven Beispiel Ziel, Prognose und bewusste Zusage unterscheiden.
+8. **Wie in unserer Runde?** Story Points relativ vergleichen, unabhängig beginnen und die wichtigste Annahme nennen.
+9. **Wobei hilft KI?** Den vorhandenen Stand untersuchen; Produktentscheidungen und geprüfte Schlussfolgerungen verantworten wir.
+
+Greife auf zwei oder drei Folien einen kurzen Beitrag auf. Die übrigen Fragen
+können als Denkimpuls stehen bleiben. Die neun Folien sind für ungefähr zehn
+Minuten gedacht; eine ausführliche Diskussion jeder Frage dauert länger.
+Die Quellen sind in den Folien und im [Leitfaden](workshop-guide.md) verlinkt.
+
+> Jetzt probieren wir das an einem kurzen Kundenwunsch aus. Achtet darauf,
+> welche Arbeit ihr einschließt und was ihr stillschweigend voraussetzt.
+> Genau diese Annahmen werden wir anschließend gemeinsam untersuchen.
+
+Mit **Zur ersten Schätzung** öffnest du das Ticket für die ganze Runde.
+
+**15–21 Minuten · Aufgabe verstehen und unabhängig schätzen**
 
 Zeige ORD-42 und lies den einen Satz der Story vor:
 
@@ -142,7 +164,7 @@ Falls eine Produktfrage bereits jetzt kommt:
 Zeitbudget: etwa drei Minuten für Kontext, Done und Referenzen,
 zwei Minuten für die Abstimmung und eine Minute für Verständnisfragen.
 
-**11–17 Minuten · Die Annahmen hinter den Zahlen**
+**21–27 Minuten · Die Annahmen hinter den Zahlen**
 
 Decke die erste Runde auf. Lies zunächst einige Begründungen still mit
 und wähle zwei unterschiedliche Annahmen. Unterschiedliche Zahlen
@@ -186,7 +208,7 @@ Falls kaum gesprochen wird, nutze ausdrücklich erfundene Sichtweisen:
 Zeitbudget: etwa eine Minute Ergebnisse ansehen, zwei Minuten für zwei
 Perspektiven, 90 Sekunden Austausch und 90 Sekunden Auswertung.
 
-**17–21 Minuten · Aus einer Annahme eine Frage machen**
+**27–31 Minuten · Aus einer Annahme eine Frage machen**
 
 Klicke nach dem Gespräch über die ersten Stimmen auf **Fragen sammeln**.
 Die App zeigt dir deine Moderationsschritte und den Kollegen ihren Auftrag.
@@ -208,7 +230,7 @@ Wenn die wichtigsten Fragen auf dem Board stehen, klicke **Zum KI-Auftrag**.
 Zeitbudget: etwa eine Minute Überleitung, eine Minute eigene Fragen,
 zwei Minuten gemeinsames Sichten.
 
-**21–26 Minuten · Du bedienst den Agent, alle prüfen mit**
+**31–36 Minuten · Du bedienst den Agent, alle prüfen mit**
 
 Im Hauptbereich der App steht **Auftrag mit euren Fragen kopieren**.
 Der Auftrag enthält automatisch die aktuell offenen Fragen der Runde.
@@ -244,7 +266,7 @@ Zeitbudget: etwa eine Minute Auftrag und Wechsel, eine Minute Analyse,
 drei Minuten Aussagen und Beleg gemeinsam ansehen. Bei längerer Laufzeit
 greift die beschriebene Reserve.
 
-**26–29 Minuten · Erkenntnisse an euren Fragen festmachen**
+**36–39 Minuten · Erkenntnisse an euren Fragen festmachen**
 
 Die App zeigt wieder euer Board. Du fragst zu den zwei oder drei betrachteten
 Aussagen:
@@ -268,7 +290,7 @@ noch nicht, ob CSV für den neuen Bestellexport gewünscht ist.
 Klicke **Produktantworten aufdecken**. Zeitbudget: zwei Minuten Zuordnung
 und Gespräch, eine Minute Festhalten und Überleitung.
 
-**29–32 Minuten · Du übernimmst die Rolle des Product Owners**
+**39–42 Minuten · Du übernimmst die Rolle des Product Owners**
 
 > Für unser Beispiel gebe ich jetzt die vorbereiteten Produktentscheidungen
 > dazu. Ordnet sie euren offenen Fragen zu: Welche Annahme verändert oder
@@ -296,7 +318,7 @@ Anforderungen. Eine Annahme der Runde wird ausdrücklich so benannt.
 Klicke anschließend **Zweite Runde starten**. Zeitbudget: eine Minute Antworten,
 eine Minute Zuordnung und eine Minute Restfragen samt Überleitung.
 
-**32–39 Minuten · Neu schätzen und den Unterschied erklären**
+**42–49 Minuten · Neu schätzen und den Unterschied erklären**
 
 Starte Runde zwei:
 
@@ -337,7 +359,7 @@ Ziehe die passende Schlussfolgerung für dieses Experiment:
 Zeitbudget: zwei Minuten Abstimmung, drei Minuten für Begründungen,
 zwei Minuten für Herkunft und Bedeutung der neuen Informationen.
 
-**39–44 Minuten · Wenn KI die Umsetzung beschleunigt**
+**49–54 Minuten · Wenn KI die Umsetzung beschleunigt**
 
 Dieser Input verbindet das Refinement mit dem zweiten Teil des
 KI-Themas: Änderungen an der eigentlichen Arbeit.
@@ -386,7 +408,7 @@ Hole einen Beitrag ab. Überleitung:
 Zeitbudget: ungefähr zweieinhalb Minuten Erklärung, 90 Sekunden
 Austausch und eine Minute für Beitrag und Überleitung.
 
-**44–51 Minuten · Eine brauchbare Antwort auf „bis Freitag?“**
+**54–61 Minuten · Eine brauchbare Antwort auf „bis Freitag?“**
 
 Öffne die Transferphase. Greife deinen Einstieg auf:
 
@@ -431,7 +453,7 @@ Zeitbudget: 90 Sekunden Schreiben, drei Minuten Lesen und Besprechen,
 90 Sekunden Überarbeiten und eine Minute Einordnung beziehungsweise
 Überleitung. Die Begriffserklärung gehört in die Besprechung.
 
-**51–55 Minuten · Ein Versuch für den Alltag**
+**61–65 Minuten · Ein Versuch für den Alltag**
 
 Zeige „Mitnehmen“. Lies die vier Karten nicht nur der Reihe nach vor.
 Verbinde sie mit einem kleinen konkreten Vorgehen:
