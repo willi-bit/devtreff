@@ -1,0 +1,37 @@
+{
+  "name": "devtreff",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "packageManager": "npm@11.14.1",
+  "scripts": {
+    "dev": "convex dev --start \"npm run dev:frontend\"",
+    "dev:frontend": "next dev",
+    "dev:backend": "convex dev",
+    "build": "next build",
+    "build:vercel": "convex deploy --cmd \"npm run build\" --cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "next typegen && tsc --noEmit && tsc --noEmit --project convex/tsconfig.json",
+    "check": "npm run lint && npm run typecheck",
+    "convex:check": "convex dev --once --typecheck enable"
+  },
+  "dependencies": {
+    "convex": "^1.45.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22.20.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
