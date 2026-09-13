@@ -6,15 +6,13 @@ import {
   ArrowRight,
   Check,
   CheckCheck,
+  ChevronDown,
   CircleHelp,
   Clock3,
-  Code2,
   Eye,
   Lightbulb,
   LockKeyhole,
-  MessageCircleQuestion,
   Plus,
-  Sparkles,
   Target,
 } from "lucide-react";
 import { api } from "@convex/_generated/api";
@@ -30,25 +28,22 @@ export function StoryPanel({ compact = false }: { compact?: boolean }) {
       aria-labelledby="story-heading"
     >
       <div className="panel-top">
+        <h2 id="story-heading">{STORY.title}</h2>
         <span className="ticket-tag">{STORY.id}</span>
-        <span className="subtle-label">Unser gemeinsames Beispiel</span>
       </div>
-      <h2 id="story-heading">{STORY.title}</h2>
       <blockquote>„{STORY.description}“</blockquote>
       <details className="context-details" open={!compact}>
-        <summary>Kontext & Definition of Done</summary>
+        <summary>
+          Kontext & Definition of Done <ChevronDown size={16} />
+        </summary>
         <ul>
           {STORY.context.map((item) => (
-            <li key={item}>
-              <Check size={14} />
-              {item}
-            </li>
+            <li key={item}>{item}</li>
           ))}
         </ul>
         <div className="done-line">
-          <CheckCheck size={17} />
           <p>
-            <b>Fertig bedeutet</b>
+            <b>Definition of Done</b>
             <br />
             {STORY.done}
           </p>
@@ -58,13 +53,13 @@ export function StoryPanel({ compact = false }: { compact?: boolean }) {
     </section>
   );
 }
-export function ReferencePanel() {
-  return (
-    <section className="panel reference-panel">
-      <div className="panel-top">
-        <h3>Eine Zahl braucht einen Bezug.</h3>
-        <span className="subtle-label">Story Points</span>
-      </div>
+export function ReferencePanel({
+  collapsible = false,
+}: {
+  collapsible?: boolean;
+}) {
+  const content = (
+    <>
       <div className="reference-grid">
         {REFERENCES.map((r) => (
           <article className="reference-item" key={r.points}>
@@ -77,38 +72,37 @@ export function ReferencePanel() {
         ))}
       </div>
       <p className="fine-print">
-        Fiktive Referenzen für dasselbe Team und dieselbe Definition of Done.
-        KI-Nutzung ist bereits mitgedacht.
+        Fiktive Team-Referenzen · gleiche Definition of Done · KI mitgedacht
       </p>
+    </>
+  );
+  return collapsible ? (
+    <details className="panel reference-panel reference-details">
+      <summary>
+        Referenzen <ChevronDown size={16} />
+      </summary>
+      {content}
+    </details>
+  ) : (
+    <section className="panel reference-panel">
+      <div className="panel-top">
+        <h3>Referenzen</h3>
+        <span className="subtle-label">Story Points</span>
+      </div>
+      {content}
     </section>
   );
 }
 export function LobbyPanel({ room }: { room: Room }) {
   return (
     <>
-      <div className="lobby-banner">
-        <span className="lobby-symbol">
-          <Sparkles size={37} strokeWidth={1.3} />
-        </span>
-        <div>
-          <h2>
-            {room.isHost
-              ? "Die Runde beginnt mit euch."
-              : `Schön, dass du dabei bist, ${room.me?.name}.`}
-          </h2>
-          <p>
-            {room.isHost
-              ? "Teile den Raumcode. Sobald alle angekommen sind, öffnest du die erste Schätzrunde."
-              : "Deine Moderation startet gleich die erste Runde. Bis dahin kannst du die Aufgabe und die Referenzen kennenlernen."}
-          </p>
-        </div>
-      </div>
+      {!room.isHost && (
+        <p className="lobby-status" role="status">
+          <span className="live-dot" /> Warten auf den Start
+        </p>
+      )}
       <StoryPanel />
-      <ReferencePanel />
-      <div className="principle-strip">
-        <LockKeyhole size={18} />
-        <span>Erst unabhängig wählen. Dann gemeinsam aufdecken.</span>
-      </div>
+      <ReferencePanel collapsible />
     </>
   );
 }
@@ -143,15 +137,11 @@ export function VotePanel({
       {room.isHost ? (
         <section className="panel voting-panel">
           <div className="panel-top">
-            <h2>Alle Perspektiven zählen.</h2>
+            <h2>Schätzungen</h2>
             <span className="badge">
               <LockKeyhole size={13} /> Verdeckt
             </span>
           </div>
-          <p className="muted">
-            Die Runde schätzt unabhängig. Du siehst, wer bereit ist. Die Zahlen
-            werden gemeinsam aufgedeckt.
-          </p>
           <div className="sealed-grid">
             {room.members.map((m, index) => (
               <div
@@ -172,24 +162,20 @@ export function VotePanel({
               Noch ist niemand beigetreten. Teile den Teilnehmerlink.
             </p>
           )}
-          <div className="vote-progress">
-            <span>
-              <b>{room.votedCount}</b> von {room.members.length} Schätzungen
-              abgegeben
-            </span>
-            <span>Du entscheidest, wann aufgedeckt wird.</span>
-          </div>
         </section>
       ) : (
         <form className="panel voting-panel" onSubmit={submit}>
           <div className="panel-top">
-            <h2>Deine Perspektive</h2>
-            <span className="badge">
-              <LockKeyhole size={13} /> Nur für dich sichtbar
+            <h2>Deine Schätzung</h2>
+            <span
+              className="badge"
+              title="Bis zum Aufdecken nur für dich sichtbar"
+            >
+              <LockKeyhole size={13} /> Verdeckt
             </span>
           </div>
           <fieldset className="estimate-fieldset">
-            <legend>Wie groß ist die Aufgabe im Vergleich?</legend>
+            <legend>Story Points</legend>
             <div className="estimate-cards">
               {POINTS.map((value) => (
                 <button
@@ -202,9 +188,10 @@ export function VotePanel({
                   aria-pressed={point === value}
                   onClick={() => setPoint(value)}
                 >
-                  <span>{value === "?" ? <CircleHelp size={14} /> : "SP"}</span>
                   <strong>{value}</strong>
-                  <small>{point === value ? <Check size={14} /> : "·"}</small>
+                  {point === value && (
+                    <Check className="estimate-selected" size={14} />
+                  )}
                 </button>
               ))}
             </div>
@@ -229,9 +216,7 @@ export function VotePanel({
             rows={3}
           />
           <div className="form-footer">
-            <span className="fine-print">
-              {reason.length}/500 · Auch „?“ ist eine wertvolle Antwort.
-            </span>
+            <span className="fine-print">{reason.length}/500</span>
             <Button
               type="submit"
               disabled={
@@ -247,8 +232,7 @@ export function VotePanel({
           {existing && !changed && (
             <p className="success-note" role="status">
               <CheckCheck size={17} />
-              Gespeichert. Du kannst deine Schätzung bis zum Aufdecken noch
-              ändern.
+              Gespeichert. Bis zum Aufdecken änderbar.
             </p>
           )}
         </form>
@@ -303,7 +287,6 @@ export function Distribution({
           );
         })}
       </div>
-      <p className="fine-print">Relative Größe · gemeinsame Referenzen</p>
     </section>
   );
 }
@@ -323,24 +306,13 @@ export function ResultsPanel({
   return (
     <>
       <div className={compare ? "comparison-grid" : ""}>
-        <Distribution
-          votes={room.firstVotes}
-          title="Runde 01 · erste Einschätzung"
-        />
+        <Distribution votes={room.firstVotes} title="Runde 1" />
         {compare && (
-          <Distribution
-            votes={room.secondVotes}
-            title="Runde 02 · nach der Klärung"
-            accent
-          />
+          <Distribution votes={room.secondVotes} title="Runde 2" accent />
         )}
       </div>
       <div className="section-title">
-        <h2>
-          {compare
-            ? "Die Veränderung steckt in der Begründung."
-            : "Welche Annahme steckt dahinter?"}
-        </h2>
+        <h2>Begründungen</h2>
         <span>{members.length} Perspektiven</span>
       </div>
       <div className="perspective-list">
@@ -427,7 +399,7 @@ export function ScopePanel({
       <div className="open-question">
         <CircleHelp size={20} />
         <p>
-          <b>Eine Unsicherheit bleibt bewusst offen.</b>
+          <b>Offen: Performance-Abnahme</b>
           <br />
           Messbare Performance-Abnahme mit 1.000 Testdatensätzen gemeinsam
           vereinbaren.
@@ -475,33 +447,18 @@ export function RefinementPanel({
   return (
     <>
       <div className="refinement-intro">
-        <div>
-          <MessageCircleQuestion size={23} />
-          <b>Ihr zuerst</b>
-          <span>Welche Frage fehlt?</span>
-        </div>
+        <b>Fragen sammeln</b>
         <ArrowRight size={17} />
-        <div>
-          <Code2 size={23} />
-          <b>KI ergänzt</b>
-          <span>Code und Belege prüfen.</span>
-        </div>
+        <b>KI-Codeanalyse</b>
         <ArrowRight size={17} />
-        <div>
-          <CheckCheck size={23} />
-          <b>Gemeinsam bewerten</b>
-          <span>Was ist wirklich geklärt?</span>
-        </div>
+        <b>Gemeinsam bewerten</b>
       </div>
       {editable && (
         <form className="panel insight-form" onSubmit={submit}>
           <div className="panel-top">
             <h2>
-              {room.isHost
-                ? "Erkenntnisse festhalten"
-                : "Welche Frage sollten wir klären?"}
+              {room.isHost ? "Erkenntnis hinzufügen" : "Frage hinzufügen"}
             </h2>
-            <span className="badge">Gemeinsames Board</span>
           </div>
           {room.isHost && (
             <label className="select-label">
@@ -545,11 +502,6 @@ export function RefinementPanel({
             </label>
           )}
           <div className="form-footer">
-            <span className="fine-print">
-              {room.isHost
-                ? "Fakten, Annahmen und offene Fragen getrennt halten."
-                : "Kurz und konkret. Eine Frage pro Karte."}
-            </span>
             <Button
               type="submit"
               busy={task.busy}
@@ -562,7 +514,7 @@ export function RefinementPanel({
       )}
       <ErrorNote error={task.error} />
       <div className="section-title">
-        <h2>Unser gemeinsames Verständnis</h2>
+        <h2>Fragen & Erkenntnisse</h2>
         <span>
           {
             room.insights.filter((i) => !i.resolved && i.kind === "question")
@@ -617,9 +569,7 @@ export function RefinementPanel({
       </div>
       {room.insights.length === 0 && (
         <div className="empty-board">
-          <MessageCircleQuestion size={28} />
-          <h3>Hier ist Platz für eure Fragen.</h3>
-          <p>Welche Antwort würde deine Einschätzung am stärksten verändern?</p>
+          <p>Noch keine Beiträge.</p>
         </div>
       )}
     </>
@@ -641,8 +591,7 @@ export function TransferPanel({ room, token }: { room: Room; token: string }) {
       {!room.reflectionsRevealed &&
         (room.isHost ? (
           <section className="panel transfer-wait">
-            <LockKeyhole size={28} />
-            <h2>Erst denken. Dann gemeinsam lesen.</h2>
+            <h2>Antworten sammeln</h2>
             <p>
               {room.reflectionCount} von {room.members.length} Antworten sind
               gespeichert.
@@ -746,12 +695,6 @@ export function Takeaways() {
   return (
     <>
       <div className="takeaway-banner">
-        <Sparkles size={31} />
-        <h2>
-          Menschliche Erfahrung.
-          <br />
-          Bessere KI-Fragen.
-        </h2>
         <p>Was probiert ihr beim nächsten Refinement an drei Aufgaben aus?</p>
       </div>
       <div className="scope-grid">

@@ -1,7 +1,4 @@
 /* Keep workshop content readable while screen sharing and on personal devices. */
-.workspace .phase-heading p {
-  font-size: 14px;
-}
 .workspace .phase-heading h1:focus {
   outline: none;
 }
@@ -16,7 +13,7 @@
 }
 .workspace .context-details summary,
 .workspace .context-details > .text-link {
-  font-size: 12px;
+  font-size: 13px;
 }
 .workspace .context-details li {
   font-size: 13px;
@@ -40,10 +37,6 @@
 }
 .workspace textarea {
   font-size: 14px;
-}
-.workspace .voting-panel .muted,
-.workspace .lobby-banner p {
-  font-size: 13px;
 }
 .workspace .form-footer .button {
   font-size: 12px;
@@ -69,9 +62,6 @@
 }
 .workspace .refinement-intro b {
   font-size: 12px;
-}
-.workspace .refinement-intro span {
-  font-size: 10px;
 }
 .workspace .takeaway-card p {
   font-size: 13px;
@@ -100,18 +90,36 @@
     height: 42px;
   }
 }
-@media (max-width: 480px) {
-  .workspace .phase-heading p {
-    font-size: 13px;
+@media (max-width: 1280px) {
+  .workspace .phase-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
   }
+  .workspace .moderator-notes summary {
+    font-size: 12px;
+  }
+}
+@media (max-width: 760px) {
+  .workspace .room-code-box strong {
+    margin: 0;
+  }
+  .workspace .phase-heading > .button {
+    min-height: 44px;
+  }
+}
+@media (max-width: 480px) {
   .workspace .step-navigation .step-current > div {
     font-size: 9px;
   }
   .workspace .refinement-intro b {
     font-size: 10px;
   }
-  .workspace .refinement-intro span {
-    font-size: 8px;
+  .workspace .story-panel blockquote {
+    padding: 0;
+  }
+  .workspace .phase-heading > .button {
+    width: 100%;
   }
   .workspace .panel h2 {
     font-size: 18px;

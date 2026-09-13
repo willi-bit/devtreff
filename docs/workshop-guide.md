@@ -35,6 +35,10 @@ dein inhaltliches Drehbuch und die Reserve, falls du darauf zurückgreifen möch
 
 ## Die KI-Sequenz
 
+Die Hauptaktion steht oben bei der Überschrift. Die Referenzen lassen sich zu
+Beginn aufklappen und sind in den Schätzrunden direkt sichtbar. Deinen
+**Moderationshinweis** kannst du rechts bei Bedarf öffnen.
+
 Einen **frischen Agent-Chat** öffnen, damit die vorbereiteten PO-Antworten aus der
 Workshop-Planung dort noch nicht bekannt sind. Während der Phase „Gemeinsam
 klären“ liegt rechts der kopierbare **Analyseauftrag** bereit.
