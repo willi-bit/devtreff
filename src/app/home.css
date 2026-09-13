@@ -32,7 +32,7 @@
 }
 
 .hero-copy h1 em {
-  color: #738d70;
+  color: var(--accent-text);
   font-style: normal;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .resume-link:hover {
-  color: var(--forest);
+  color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -68,7 +68,7 @@
   justify-content: center;
   min-height: 330px;
   border-radius: 18px;
-  background: #eaf0e5;
+  background: var(--surface);
 }
 
 .floating-card {
@@ -76,10 +76,10 @@
   height: 168px;
   display: grid;
   place-items: center;
-  border: 1px solid #dfe5db;
+  border: 1px solid var(--line-strong);
   border-radius: 12px;
-  background: white;
-  box-shadow: 0 8px 20px #274c3010;
+  background: var(--surface-raised);
+  box-shadow: 0 8px 20px #00000040;
 }
 
 .floating-card strong {
@@ -97,15 +97,16 @@
   position: relative;
   z-index: 1;
   transform: translateY(-8px);
-  border-color: var(--forest);
+  border-color: var(--line-strong);
   background: var(--forest);
-  color: white;
+  color: var(--foreground);
 }
 
 .float-three {
   transform: translate(-14px, 10px) rotate(9deg);
-  border-color: #d4e889;
+  border-color: var(--lime);
   background: var(--lime);
+  color: var(--dark);
 }
 
 .join-strip {
@@ -114,9 +115,10 @@
   justify-content: space-between;
   gap: 24px;
   padding: 28px 32px;
+  border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--dark);
-  color: white;
+  color: var(--foreground);
   scroll-margin-top: 24px;
 }
 
@@ -133,9 +135,9 @@
 
 .join-input-row input {
   width: 184px;
-  background: #284d3f;
-  border-color: #446555;
-  color: white;
+  background: var(--input);
+  border-color: var(--line-strong);
+  color: var(--foreground);
   font-family: var(--font-geist-mono), monospace;
   font-size: 15px;
   letter-spacing: 0.12em;
@@ -143,7 +145,7 @@
 }
 
 .join-input-row input::placeholder {
-  color: #b7c7b2;
+  color: var(--muted);
   font-size: 12px;
 }
 
@@ -153,9 +155,6 @@
 
 .join-code-form .error-note {
   max-width: 330px;
-  color: #f8cac0;
-  background: #ffffff09;
-  border-color: #b4796680;
 }
 
 .how-section {
@@ -186,7 +185,7 @@
 }
 
 .how-card > span {
-  color: #8a9a85;
+  color: var(--muted);
   font-family: var(--font-geist-mono), monospace;
   font-size: 12px;
 }

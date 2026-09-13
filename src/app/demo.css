@@ -8,7 +8,7 @@
 .demo-sidebar {
   padding: 32px 21px;
   border-right: 1px solid var(--line);
-  background: #edf1e8;
+  background: var(--surface);
 }
 .demo-company {
   display: flex;
@@ -19,11 +19,11 @@
 .demo-company > span {
   width: 38px;
   height: 42px;
-  background: #dfe8d5;
+  background: var(--surface-raised);
   border-radius: 9px;
   display: grid;
   place-items: center;
-  color: #618048;
+  color: var(--accent-text);
 }
 .demo-company b {
   font-size: 12px;
@@ -32,7 +32,7 @@
 .demo-company small {
   display: block;
   font-size: 9px;
-  color: #8a9b7b;
+  color: var(--muted);
   margin-top: 5px;
 }
 .demo-sidebar .sidebar-caption {
@@ -47,23 +47,23 @@
   border: 0;
   border-radius: 7px;
   background: transparent;
-  color: #7c8b6b;
+  color: var(--muted);
   font-size: 11px;
   margin-bottom: 6px;
 }
 .demo-nav > span {
   font-size: 9px;
   margin-left: auto;
-  color: #8a9e76;
+  color: var(--muted);
 }
 .demo-nav.active {
-  background: #dfe9d5;
-  color: #355c33;
+  background: var(--mint);
+  color: var(--accent-text);
   font-weight: 550;
 }
 .demo-ticket {
-  background: #f6f8ef;
-  border: 1px solid #dde6cf;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 9px;
   margin-top: 38px;
   padding: 18px 15px;
@@ -75,7 +75,7 @@
 .demo-ticket p {
   font-size: 10px;
   line-height: 1.8;
-  color: #79886a;
+  color: var(--muted);
 }
 .demo-ticket .fine-print {
   display: block;
@@ -110,7 +110,7 @@
 }
 .demo-actor label {
   font-size: 9px;
-  color: #899578;
+  color: var(--muted);
 }
 .demo-actor select {
   font-size: 10px;
@@ -122,7 +122,7 @@
   align-items: center;
   gap: 5px;
   font-size: 8px;
-  color: #98a287;
+  color: var(--muted);
   margin-top: 8px;
 }
 .demo-stats {
@@ -139,7 +139,7 @@
 .demo-stat span {
   display: block;
   font-size: 10px;
-  color: #8a9978;
+  color: var(--muted);
 }
 .demo-stat strong {
   display: block;
@@ -149,7 +149,7 @@
   margin-top: 12px;
 }
 .demo-stat svg {
-  color: #a0b780;
+  color: var(--muted);
 }
 .demo-table-panel {
   padding: 0;
@@ -172,21 +172,21 @@
   font-size: 9px;
   font-weight: 400;
   padding: 4px 6px;
-  background: #edf2e5;
-  color: #89a071;
+  background: var(--surface-raised);
+  color: var(--accent-text);
   border-radius: 4px;
 }
 .filter-label {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #90a176;
+  color: var(--muted);
 }
 .filter-label select {
   font-size: 10px;
   padding: 8px 12px;
   width: 153px;
-  border-color: #dce5d0;
+  border-color: var(--line-strong);
 }
 .table-scroll {
   overflow-x: auto;
@@ -199,28 +199,28 @@
 }
 .demo-table-panel th {
   padding: 13px 22px;
-  background: #f6f8f1;
+  background: var(--surface-raised);
   text-align: left;
-  color: #8a9a77;
+  color: var(--muted);
   font-size: 9px;
   font-weight: 500;
-  border-block: 1px solid #e7edde;
+  border-block: 1px solid var(--line);
 }
 .demo-table-panel td {
   padding: 15px 22px;
-  border-bottom: 1px solid #f0f2e9;
-  color: #6e805e;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
 }
 .demo-table-panel tr:last-child td {
   border-bottom: none;
 }
 .demo-table-panel tbody tr:hover {
-  background: #fafcf5;
+  background: var(--surface-hover);
 }
 .demo-table-panel td.order-id {
   font-family: var(--font-geist-mono), monospace;
   font-size: 9px;
-  color: #4b713c;
+  color: var(--accent-text);
 }
 .demo-table-panel .align-right {
   text-align: right;
@@ -240,16 +240,16 @@
   background: currentColor;
 }
 .status-open {
-  background: #f5efd8;
-  color: #ad9147;
+  background: var(--warning-surface);
+  color: var(--warning);
 }
 .status-processing {
-  background: #e9edf5;
-  color: #6f87b0;
+  background: var(--info-surface);
+  color: var(--info);
 }
 .status-shipped {
-  background: #edf4e5;
-  color: #819f58;
+  background: var(--success-surface);
+  color: var(--success);
 }
 .table-pagination {
   border-top: 1px solid var(--line);
@@ -257,7 +257,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #8d9c7c;
+  color: var(--muted);
   font-size: 9px;
 }
 .table-pagination > div {
@@ -282,7 +282,7 @@
   align-items: center;
   gap: 6px;
   font-size: 9px;
-  color: #93a180;
+  color: var(--muted);
 }
 .demo-export-note {
   display: flex;
@@ -290,7 +290,7 @@
   gap: 7px;
   font-size: 10px;
   padding: 0 23px 18px;
-  color: #8c9e71;
+  color: var(--muted);
 }
 .demo-table-panel .error-note {
   margin: 0 23px 18px;

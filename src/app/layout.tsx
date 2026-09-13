@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ConvexClientProvider } from "@/components/convex-client-provider";
 import "./globals.css";
@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   title: "devtreff · Gemeinsam besser schätzen",
   description:
     "Ein interaktiver Workshop über menschliche Erfahrung, KI und die Annahmen hinter einer Schätzung.",
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#0f1813",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
