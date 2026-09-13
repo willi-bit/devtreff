@@ -4,6 +4,7 @@ import { getActor } from "../demo/access";
 import { customers, orders } from "../demo/data";
 import { listOrders } from "../demo/orders";
 import { exportCustomers } from "../demo/customer-export";
+import { requireDemoAccess } from "./lib/access";
 
 const persona = v.union(
   v.literal("nord-admin"),
@@ -18,8 +19,9 @@ const status = v.union(
 );
 
 export const overview = query({
-  args: { persona, status, page: v.number() },
-  handler: (_ctx, args) => {
+  args: { access: v.string(), persona, status, page: v.number() },
+  handler: async (_ctx, args) => {
+    await requireDemoAccess(args.access);
     const actor = getActor(args.persona);
     try {
       return {
@@ -46,8 +48,9 @@ export const overview = query({
   },
 });
 export const customerExport = query({
-  args: { persona },
-  handler: (_ctx, args) => {
+  args: { access: v.string(), persona },
+  handler: async (_ctx, args) => {
+    await requireDemoAccess(args.access);
     try {
       return {
         csv: exportCustomers(customers, getActor(args.persona)),

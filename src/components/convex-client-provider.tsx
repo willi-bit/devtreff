@@ -1,9 +1,23 @@
 "use client";
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
-export function ConvexClientProvider({ children }: { children: ReactNode }) {
+const DemoAccess = createContext<string | null>(null);
+
+export function useDemoAccess() {
+  const access = useContext(DemoAccess);
+  if (!access) throw new Error("Veranstaltungszugang fehlt.");
+  return access;
+}
+
+export function ConvexClientProvider({
+  children,
+  access,
+}: {
+  children: ReactNode;
+  access: string;
+}) {
   const [client] = useState(() => {
     const url = process.env.NEXT_PUBLIC_CONVEX_URL;
 
@@ -16,5 +30,9 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
     return new ConvexReactClient(url);
   });
 
-  return <ConvexProvider client={client}>{children}</ConvexProvider>;
+  return (
+    <DemoAccess.Provider value={access}>
+      <ConvexProvider client={client}>{children}</ConvexProvider>
+    </DemoAccess.Provider>
+  );
 }

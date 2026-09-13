@@ -8,13 +8,14 @@ import {
 import type { Doc } from "./_generated/dataModel";
 import { PHASES } from "../shared/workshop";
 import { PO_ANSWERS } from "./lib/answers";
+import { requireDemoAccess } from "./lib/access";
 import {
   kindValidator,
   phaseValidator,
   pointValidator,
 } from "./lib/validators";
 
-const credentials = { code: v.string(), token: v.string() };
+const credentials = { access: v.string(), code: v.string(), token: v.string() };
 function clean(value: string, label: string, max: number, min = 1) {
   const result = value.trim();
   if (result.length < min || result.length > max)
@@ -64,8 +65,9 @@ async function requireMember(ctx: QueryCtx, room: Doc<"rooms">, token: string) {
 }
 
 export const create = mutation({
-  args: { code: v.string(), hostToken: v.string() },
+  args: { access: v.string(), code: v.string(), hostToken: v.string() },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     validToken(args.hostToken);
     const code = args.code.toUpperCase();
     if (!/^[A-Z2-9]{6}$/.test(code))
@@ -88,6 +90,7 @@ export const create = mutation({
 export const join = mutation({
   args: { ...credentials, name: v.string() },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     validToken(args.token);
     const room = await requireRoom(ctx, args.code);
     if (room.hostToken === args.token)
@@ -118,8 +121,9 @@ export const join = mutation({
 });
 
 export const get = query({
-  args: { code: v.string(), token: v.optional(v.string()) },
+  args: { access: v.string(), code: v.string(), token: v.optional(v.string()) },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await findRoom(ctx, args.code);
     if (!room) return null;
     const members = await ctx.db
@@ -218,6 +222,7 @@ export const vote = mutation({
     reason: v.string(),
   },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     const member = await requireMember(ctx, room, args.token);
     if (room.phase !== (args.round === 1 ? "estimate1" : "estimate2"))
@@ -245,6 +250,7 @@ export const vote = mutation({
 export const advance = mutation({
   args: { ...credentials, expectedPhase: phaseValidator },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     if (room.phase !== args.expectedPhase)
@@ -277,6 +283,7 @@ export const addInsight = mutation({
     source: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     if (room.phase !== "refine" && room.phase !== "scope")
       throw new ConvexError("Das Fragenboard ist gerade geschlossen.");
@@ -306,6 +313,7 @@ export const addInsight = mutation({
 export const resolveInsight = mutation({
   args: { ...credentials, id: v.id("insights") },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     const item = await ctx.db.get(args.id);
@@ -318,6 +326,7 @@ export const resolveInsight = mutation({
 export const reflect = mutation({
   args: { ...credentials, text: v.string() },
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     const member = await requireMember(ctx, room, args.token);
     if (room.phase !== "transfer" || room.reflectionsRevealed)
@@ -340,6 +349,7 @@ export const reflect = mutation({
 export const revealReflections = mutation({
   args: credentials,
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     if (room.phase !== "transfer")
@@ -360,6 +370,7 @@ async function clearRound(ctx: MutationCtx, room: Doc<"rooms">) {
 export const reset = mutation({
   args: credentials,
   handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     await clearRound(ctx, room);

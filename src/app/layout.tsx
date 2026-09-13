@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import { ConvexClientProvider } from "@/components/convex-client-provider";
+import { DEMO_ACCESS_COOKIE, verifyDemoAccess } from "../../shared/demo-access";
 import "./globals.css";
 import "./home.css";
 import "./demo.css";
@@ -20,6 +22,7 @@ export const metadata: Metadata = {
   title: "devtreff · Gemeinsam besser schätzen",
   description:
     "Ein interaktiver Workshop über menschliche Erfahrung, KI und die Annahmen hinter einer Schätzung.",
+  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
@@ -27,14 +30,22 @@ export const viewport: Viewport = {
   themeColor: "#0f1813",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const access = (await cookies()).get(DEMO_ACCESS_COOKIE)?.value;
+  const admitted = await verifyDemoAccess(access);
   return (
     <html
       lang="de"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        {admitted ? (
+          <ConvexClientProvider access={access!}>
+            {children}
+          </ConvexClientProvider>
+        ) : (
+          children
+        )}
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useMutation } from "convex/react";
+import { useDemoAccess } from "./convex-client-provider";
 import {
   ArrowRight,
   Check,
@@ -123,11 +124,14 @@ export function VotePanel({
   const [reason, setReason] = useState(existing?.reason ?? "");
   const task = useTask();
   const vote = useMutation(api.rooms.vote);
+  const access = useDemoAccess();
   const changed = point !== existing?.point || reason !== existing?.reason;
   function submit(event: FormEvent) {
     event.preventDefault();
     if (!point) return;
-    void task.run(() => vote({ code: room.code, token, round, point, reason }));
+    void task.run(() =>
+      vote({ access, code: room.code, token, round, point, reason }),
+    );
   }
   return (
     <>
@@ -422,6 +426,7 @@ export function RefinementPanel({
   );
   const [source, setSource] = useState("");
   const add = useMutation(api.rooms.addInsight);
+  const access = useDemoAccess();
   const resolve = useMutation(api.rooms.resolveInsight);
   const task = useTask();
   const editable = room.phase === "refine" || room.phase === "scope";
@@ -429,6 +434,7 @@ export function RefinementPanel({
     event.preventDefault();
     void task.run(async () => {
       await add({
+        access,
         code: room.code,
         token,
         text,
@@ -553,7 +559,7 @@ export function RefinementPanel({
                   }
                   onClick={() =>
                     void task.run(() =>
-                      resolve({ code: room.code, token, id: item.id }),
+                      resolve({ access, code: room.code, token, id: item.id }),
                     )
                   }
                 >
@@ -577,6 +583,7 @@ export function RefinementPanel({
 }
 
 export function TransferPanel({ room, token }: { room: Room; token: string }) {
+  const access = useDemoAccess();
   const [text, setText] = useState(room.ownReflection ?? "");
   const task = useTask();
   const reflect = useMutation(api.rooms.reflect);
@@ -584,7 +591,7 @@ export function TransferPanel({ room, token }: { room: Room; token: string }) {
   const saved = room.ownReflection === text;
   function submit(event: FormEvent) {
     event.preventDefault();
-    void task.run(() => reflect({ code: room.code, token, text }));
+    void task.run(() => reflect({ access, code: room.code, token, text }));
   }
   return (
     <>
@@ -598,7 +605,7 @@ export function TransferPanel({ room, token }: { room: Room; token: string }) {
             </p>
             <Button
               onClick={() =>
-                void task.run(() => reveal({ code: room.code, token }))
+                void task.run(() => reveal({ access, code: room.code, token }))
               }
               busy={task.busy}
             >

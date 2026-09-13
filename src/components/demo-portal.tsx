@@ -20,6 +20,7 @@ import { api } from "@convex/_generated/api";
 import type { OrderStatus, Persona } from "../../demo/types";
 import { useTask } from "@/lib/browser";
 import { AppLoading, Avatar, Button, ErrorNote, Logo } from "./ui";
+import { useDemoAccess } from "./convex-client-provider";
 
 const statusLabel = {
   open: "Offen",
@@ -32,16 +33,20 @@ const euro = new Intl.NumberFormat("de-DE", {
 });
 
 export function DemoPortal() {
+  const access = useDemoAccess();
   const [persona, setPersona] = useState<Persona>("nord-admin");
   const [status, setStatus] = useState<OrderStatus | "all">("all");
   const [page, setPage] = useState(0);
   const [tab, setTab] = useState<"orders" | "customers">("orders");
   const task = useTask();
   const convex = useConvex();
-  const data = useQuery(api.demo.overview, { persona, status, page });
+  const data = useQuery(api.demo.overview, { access, persona, status, page });
   function download() {
     void task.run(async () => {
-      const result = await convex.query(api.demo.customerExport, { persona });
+      const result = await convex.query(api.demo.customerExport, {
+        access,
+        persona,
+      });
       const url = URL.createObjectURL(
         new Blob([result.csv], { type: "text/csv;charset=utf-8" }),
       );

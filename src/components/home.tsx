@@ -14,8 +14,10 @@ import {
   useTask,
 } from "@/lib/browser";
 import { Button, ErrorNote, Logo } from "./ui";
+import { useDemoAccess } from "./convex-client-provider";
 
 export function Home() {
+  const access = useDemoAccess();
   const router = useRouter();
   const create = useMutation(api.rooms.create);
   const previous = useStoredValue("devtreff:last-room");
@@ -36,7 +38,7 @@ export function Home() {
       const roomCode = makeCode();
       const token = crypto.randomUUID();
       remember(hostKey(roomCode), token);
-      await create({ code: roomCode, hostToken: token });
+      await create({ access, code: roomCode, hostToken: token });
       remember("devtreff:last-room", roomCode);
       router.push(`/host/${roomCode}`);
     });

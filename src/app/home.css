@@ -302,3 +302,34 @@
     font-size: 14px;
   }
 }
+.password-page {
+  display: grid;
+  place-items: center;
+  min-height: 70vh;
+  padding: 32px 0;
+}
+
+.password-panel {
+  display: grid;
+  gap: 20px;
+  width: min(100%, 460px);
+}
+
+.password-panel > svg {
+  color: var(--lime);
+}
+
+.password-panel h1 {
+  font-size: clamp(26px, 5vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.password-panel > p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.password-panel .button {
+  width: 100%;
+}

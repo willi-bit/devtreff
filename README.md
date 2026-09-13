@@ -40,6 +40,39 @@ npm run dev
 Convex schreibt die Entwicklungsumgebung in `.env.local`. `.env.example`
 beschreibt die Variablen. Umgebungsdateien und Deploy-Keys bleiben außerhalb von Git.
 
+## Passwortschutz
+
+Die Website ist über `/login` mit einem gemeinsamen Veranstaltungspasswort
+geschützt. Das gleiche `DEMO_PASSWORD` muss in Next.js (`.env.local` bzw.
+Vercel-Umgebungsvariablen) und im passenden Convex-Deployment gesetzt sein.
+Verwende ein zufälliges Passwort mit mindestens 16 und höchstens 256 Zeichen.
+Fehlt die Konfiguration, bleibt der Zugang gesperrt.
+
+Im Convex-Dashboard unter **Settings → Environment Variables** setzen oder lokal:
+
+```sh
+npx convex env set DEMO_PASSWORD
+```
+
+Die CLI fragt das Passwort ab. Beim öffentlichen Deployment dasselbe Passwort
+in Vercel und Convex **Production** hinterlegen; Previews entsprechend separat.
+Das Passwort niemals als `NEXT_PUBLIC_`-Variable, im Code oder im Einladungslink
+hinterlegen.
+
+Nach der Eingabe merkt sich ein HttpOnly-Cookie den Zugang für die Browsersitzung.
+Convex prüft die daraus abgeleitete Freigabe zusätzlich vor jedem Datenzugriff.
+Raumcodes und Moderationstokens funktionieren wie bisher. Die Freigabe ist bewusst
+gemeinsam und bleibt bis zum Passwortwechsel gültig: Zum Widerrufen das Passwort
+in **beiden** Diensten ändern und Next.js neu starten bzw. auf Vercel neu deployen.
+Nach der Veranstaltung sowohl das Frontend als auch das Convex-Backend entfernen.
+
+Die Passwortabfrage erlaubt 30 Versuche pro Minute und IP **je Serverinstanz**.
+Für die öffentliche Demo in Vercel zusätzlich **Bot Protection → Challenge** und
+**AI Bots → Deny** aktivieren. Bei Bedarf eine WAF-Rate-Limit-Regel für
+`POST /api/access` ergänzen; das Limit an die Gruppengröße im gemeinsamen WLAN
+anpassen. Die kleine lokale Bremse ersetzt kein verteiltes Firewall-Limit und
+Vercels Regeln decken keine direkten Convex-Anfragen ab.
+
 ## Ansichten
 
 | Route          | Zweck                                            |
@@ -103,7 +136,9 @@ Frontend-Imports nutzen `@/`, die generierte Backend-API `@convex/`.
    Produktionsumgebung anlegen und einen Production Deploy Key mit
    `deployment:deploy`-Berechtigung erzeugen.
 3. Den Key in Vercel als `CONVEX_DEPLOY_KEY` für **Production** hinterlegen.
-4. Deployen. `vercel.json` verwendet `npm run build:vercel` und übergibt die
+4. `DEMO_PASSWORD` in Vercel und im Convex-Produktionsdeployment identisch setzen
+   (siehe [Passwortschutz](#passwortschutz)).
+5. Deployen. `vercel.json` verwendet `npm run build:vercel` und übergibt die
    passende `NEXT_PUBLIC_CONVEX_URL` automatisch an den Frontend-Build.
 
 Für Preview-Deployments einen separaten Preview Deploy Key in Convex erzeugen

@@ -39,6 +39,7 @@ import {
   useTask,
 } from "@/lib/browser";
 import { report, type Room } from "@/lib/room";
+import { useDemoAccess } from "./convex-client-provider";
 import { AppLoading, Avatar, Button, DemoLink, ErrorNote, Logo } from "./ui";
 import {
   LobbyPanel,
@@ -51,9 +52,14 @@ import {
 } from "./workshop-panels";
 
 export function WorkshopRoom({ code, host }: { code: string; host: boolean }) {
+  const access = useDemoAccess();
   const token = useStoredValue(host ? hostKey(code) : memberKey(code));
   const hydrated = useHydrated();
-  const room = useQuery(api.rooms.get, { code, token: token ?? undefined });
+  const room = useQuery(api.rooms.get, {
+    access,
+    code,
+    token: token ?? undefined,
+  });
   if (!hydrated || room === undefined) return <AppLoading />;
   if (room === null)
     return (
@@ -111,6 +117,7 @@ function JoinRoom({
 }) {
   const [name, setName] = useState("");
   const join = useMutation(api.rooms.join);
+  const access = useDemoAccess();
   const task = useTask();
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -118,7 +125,7 @@ function JoinRoom({
       const token =
         localStorage.getItem(memberKey(code)) ?? crypto.randomUUID();
       remember(memberKey(code), token);
-      await join({ code, token, name });
+      await join({ access, code, token, name });
     });
   }
   return (
@@ -288,6 +295,7 @@ function AnalysisDialog() {
 }
 
 function Workspace({ room, token }: { room: Room; token: string }) {
+  const access = useDemoAccess();
   const advance = useMutation(api.rooms.advance);
   const reset = useMutation(api.rooms.reset);
   const connection = useConvexConnectionState();
@@ -317,7 +325,7 @@ function Workspace({ room, token }: { room: Room; token: string }) {
         "Diesen Workshop neu beginnen? Schätzungen, Fragen und Antworten werden gelöscht. Teilnehmende und Raumcode bleiben erhalten.",
       )
     )
-      void task.run(() => reset({ code: room.code, token }));
+      void task.run(() => reset({ access, code: room.code, token }));
   }
   return (
     <div className="workspace">
@@ -381,6 +389,7 @@ function Workspace({ room, token }: { room: Room; token: string }) {
                 onClick={() =>
                   void task.run(() =>
                     advance({
+                      access,
                       code: room.code,
                       token,
                       expectedPhase: room.phase,
