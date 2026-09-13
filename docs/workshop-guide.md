@@ -75,6 +75,11 @@ prüft die Person ihre ursprüngliche Einschätzung erneut.
 
 ## Moderationsregeln
 
+- Mit **Einen Schritt zurück** wechselst du mit der ganzen Runde in den vorherigen
+  Schritt, auch vom Abschluss aus. Gespeicherte Schätzungen, Board-Einträge und
+  Terminantworten bleiben erhalten. Zurück in einer Schätzrunde sind die Stimmen
+  wieder verdeckt und änderbar. Gehst du vor die Transferrunde zurück, werden auch
+  die Terminantworten beim erneuten Betreten wieder verdeckt gesammelt.
 - Die erste eigene Zahl nicht vorab nennen. Auch du kannst verdeckte Stimmen
   anderer Teilnehmender nicht über die App abrufen.
 - Erst aufdecken, wenn die Runde bereit ist. Der Zähler zeigt abgegebene Stimmen,

@@ -255,6 +255,7 @@ function ShareDialog({ code }: { code: string }) {
 function Workspace({ room, token }: { room: Room; token: string }) {
   const access = useDemoAccess();
   const advance = useMutation(api.rooms.advance);
+  const retreat = useMutation(api.rooms.retreat);
   const reset = useMutation(api.rooms.reset);
   const connection = useConvexConnectionState();
   const task = useTask();
@@ -342,24 +343,47 @@ function Workspace({ room, token }: { room: Room; token: string }) {
             <h1 ref={heading} tabIndex={-1}>
               {phase.title}
             </h1>
-            {room.isHost && room.phase !== "done" && (
-              <Button
-                onClick={() =>
-                  void task.run(() =>
-                    advance({
-                      access,
-                      code: room.code,
-                      token,
-                      expectedPhase: room.phase,
-                    }),
-                  )
-                }
-                busy={task.busy}
-                disabled={!canAdvance}
-              >
-                {phase.action}
-                <ArrowRight size={17} />
-              </Button>
+            {room.isHost && (
+              <div className="phase-actions">
+                {room.phase !== "lobby" && (
+                  <Button
+                    variant="secondary"
+                    onClick={() =>
+                      void task.run(() =>
+                        retreat({
+                          access,
+                          code: room.code,
+                          token,
+                          expectedPhase: room.phase,
+                        }),
+                      )
+                    }
+                    busy={task.busy}
+                  >
+                    <ArrowLeft size={17} />
+                    Einen Schritt zurück
+                  </Button>
+                )}
+                {room.phase !== "done" && (
+                  <Button
+                    onClick={() =>
+                      void task.run(() =>
+                        advance({
+                          access,
+                          code: room.code,
+                          token,
+                          expectedPhase: room.phase,
+                        }),
+                      )
+                    }
+                    busy={task.busy}
+                    disabled={!canAdvance}
+                  >
+                    {phase.action}
+                    <ArrowRight size={17} />
+                  </Button>
+                )}
+              </div>
             )}
           </div>
           <ErrorNote error={task.error} />

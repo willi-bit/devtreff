@@ -4,6 +4,7 @@ import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import { api } from "../convex/_generated/api";
 import schema from "../convex/schema";
 import { createDemoAccess } from "../shared/demo-access";
+import { PHASES } from "../shared/workshop";
 
 let access: string;
 beforeAll(async () => {
@@ -120,7 +121,7 @@ describe("Independent estimation and moderator control", () => {
         token: host,
         expectedPhase: "estimate1",
       }),
-    ).rejects.toThrow("bereits im nächsten");
+    ).rejects.toThrow("inzwischen in einem anderen Schritt");
   });
 
   test("changing your vote keeps one vote; wrong rounds and empty reveals are rejected", async () => {
@@ -385,6 +386,14 @@ describe("Independent estimation and moderator control", () => {
       t.mutation(api.rooms.reset, { access, code, token: otherHost }),
     ).rejects.toThrow("Nur die Moderation");
     await expect(
+      t.mutation(api.rooms.retreat, {
+        access,
+        code,
+        token: otherHost,
+        expectedPhase: "lobby",
+      }),
+    ).rejects.toThrow("Nur die Moderation");
+    await expect(
       t.mutation(api.rooms.join, {
         access,
         code,
@@ -470,6 +479,148 @@ describe("Independent estimation and moderator control", () => {
       insights: [],
       answers: [],
       me: { name: "Alice" },
+    });
+  });
+});
+
+describe("Stepping back through the workshop", () => {
+  test("only the host can go back, the lobby is the boundary, and stale clicks are rejected", async () => {
+    const { t, code, host, alice } = await workshop();
+    const credentials = { access, code, token: host };
+    await expect(
+      t.mutation(api.rooms.retreat, { ...credentials, expectedPhase: "lobby" }),
+    ).rejects.toThrow("bereits im ersten Schritt");
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: "lobby" });
+    await expect(
+      t.mutation(api.rooms.retreat, {
+        ...credentials,
+        token: alice,
+        expectedPhase: "estimate1",
+      }),
+    ).rejects.toThrow("Nur die Moderation");
+    await expect(
+      t.mutation(api.rooms.retreat, {
+        ...credentials,
+        access: "",
+        expectedPhase: "estimate1",
+      }),
+    ).rejects.toThrow("Veranstaltungspasswort");
+    await t.mutation(api.rooms.retreat, {
+      ...credentials,
+      expectedPhase: "estimate1",
+    });
+    for (const mutation of [api.rooms.retreat, api.rooms.advance]) {
+      await expect(
+        t.mutation(mutation, { ...credentials, expectedPhase: "estimate1" }),
+      ).rejects.toThrow("inzwischen in einem anderen Schritt");
+    }
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({ phase: "lobby" });
+  });
+
+  test.each([
+    { round: 1, estimate: "estimate1", reveal: "reveal1" },
+    { round: 2, estimate: "estimate2", reveal: "compare" },
+  ] as const)("going back reopens round $round with saved votes hidden and editable", async ({ round, estimate, reveal }) => {
+    const { t, code, host, alice, bob } = await workshop();
+    const credentials = { access, code, token: host };
+    await t.run(async (ctx) => {
+      const room = await ctx.db.query("rooms").unique();
+      await ctx.db.patch(room!._id, { phase: estimate });
+    });
+    for (const token of [alice, bob]) {
+      await t.mutation(api.rooms.vote, {
+        access, code, token, round, point: "8", reason: "PRIVATE original estimate",
+      });
+    }
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: estimate });
+    await t.mutation(api.rooms.retreat, { ...credentials, expectedPhase: reveal });
+    const hostView = await t.query(api.rooms.get, credentials);
+    expect(hostView).toMatchObject({
+      phase: estimate, votedCount: 2, firstVotes: [], secondVotes: [],
+    });
+    expect(JSON.stringify(hostView)).not.toContain("PRIVATE");
+    expect(await t.query(api.rooms.get, { access, code, token: alice })).toMatchObject({
+      firstVotes: [], secondVotes: [], ownVotes: [{ round, point: "8" }],
+    });
+    await t.mutation(api.rooms.vote, {
+      access, code, token: alice, round, point: "3", reason: "Revised estimate",
+    });
+    await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: estimate });
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({
+      votedCount: 2,
+      [round === 1 ? "firstVotes" : "secondVotes"]: [
+        { name: "Alice", point: "3", reason: "Revised estimate" },
+        { name: "Bob", point: "8", reason: "PRIVATE original estimate" },
+      ],
+    });
+  });
+
+  test("every phase can be revisited without losing contributions or access", async () => {
+    const { t, code, host, alice } = await workshop();
+    const credentials = { access, code, token: host };
+    const participant = { access, code, token: alice };
+    for (const phase of PHASES.slice(0, -1)) {
+      if (phase === "estimate1" || phase === "estimate2") {
+        await t.mutation(api.rooms.vote, {
+          ...participant,
+          round: phase === "estimate1" ? 1 : 2,
+          point: "5",
+          reason: "Saved estimate",
+        });
+      }
+      if (phase === "refine") {
+        await t.mutation(api.rooms.addInsight, {
+          ...participant, text: "Does CSV suffice?", kind: "question",
+        });
+      }
+      if (phase === "transfer") {
+        await t.mutation(api.rooms.reflect, {
+          ...participant, text: "We need to agree on scope first.",
+        });
+        await t.mutation(api.rooms.revealReflections, credentials);
+      }
+      await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: phase });
+    }
+    const completed = await t.query(api.rooms.get, credentials);
+    for (let index = PHASES.length - 1; index > 0; index--) {
+      await t.mutation(api.rooms.retreat, {
+        ...credentials, expectedPhase: PHASES[index],
+      });
+      expect(await t.query(api.rooms.get, participant)).toMatchObject({
+        phase: PHASES[index - 1],
+        generation: 1,
+        me: { name: "Alice" },
+        ownVotes: [{ round: 1, point: "5" }, { round: 2, point: "5" }],
+        ownReflection: "We need to agree on scope first.",
+        reflectionsRevealed: PHASES[index - 1] === "transfer",
+      });
+    }
+    expect(await t.query(api.rooms.get, credentials)).toMatchObject({
+      phase: "lobby", firstVotes: [], secondVotes: [], insights: [], reflections: [],
+    });
+    for (const phase of PHASES.slice(0, -1)) {
+      if (phase === "review") {
+        expect(await t.query(api.rooms.get, participant)).toMatchObject({
+          answers: [], insights: [{ text: "Does CSV suffice?" }],
+        });
+      }
+      if (phase === "transfer") {
+        expect(await t.query(api.rooms.get, credentials)).toMatchObject({
+          reflections: [], reflectionsRevealed: false, reflectionCount: 1,
+        });
+        await expect(
+          t.mutation(api.rooms.advance, { ...credentials, expectedPhase: phase }),
+        ).rejects.toThrow("Decke zuerst die Antworten auf");
+        await t.mutation(api.rooms.reflect, {
+          ...participant, text: "Updated answer after clarifying the scope.",
+        });
+        await t.mutation(api.rooms.revealReflections, credentials);
+      }
+      await t.mutation(api.rooms.advance, { ...credentials, expectedPhase: phase });
+    }
+    expect(await t.query(api.rooms.get, credentials)).toEqual({
+      ...completed,
+      reflections: [{ name: "Alice", text: "Updated answer after clarifying the scope." }],
     });
   });
 });

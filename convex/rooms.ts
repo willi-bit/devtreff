@@ -254,7 +254,7 @@ export const advance = mutation({
     const room = await requireRoom(ctx, args.code);
     requireHost(room, args.token);
     if (room.phase !== args.expectedPhase)
-      throw new ConvexError("Der Workshop ist bereits im nächsten Schritt.");
+      throw new ConvexError("Der Workshop ist inzwischen in einem anderen Schritt.");
     const index = PHASES.indexOf(room.phase);
     if (index === PHASES.length - 1)
       throw new ConvexError("Der Workshop ist bereits abgeschlossen.");
@@ -272,6 +272,24 @@ export const advance = mutation({
     if (room.phase === "transfer" && !room.reflectionsRevealed)
       throw new ConvexError("Decke zuerst die Antworten auf.");
     await ctx.db.patch(room._id, { phase: PHASES[index + 1] });
+  },
+});
+
+export const retreat = mutation({
+  args: { ...credentials, expectedPhase: phaseValidator },
+  handler: async (ctx, args) => {
+    await requireDemoAccess(args.access);
+    const room = await requireRoom(ctx, args.code);
+    requireHost(room, args.token);
+    if (room.phase !== args.expectedPhase)
+      throw new ConvexError("Der Workshop ist inzwischen in einem anderen Schritt.");
+    const index = PHASES.indexOf(room.phase);
+    if (index === 0)
+      throw new ConvexError("Der Workshop ist bereits im ersten Schritt.");
+    await ctx.db.patch(room._id, {
+      phase: PHASES[index - 1],
+      reflectionsRevealed: room.phase === "done" && room.reflectionsRevealed,
+    });
   },
 });
 
