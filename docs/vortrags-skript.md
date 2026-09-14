@@ -488,24 +488,35 @@ Vorschlag, zwei Minuten Notieren und Beiträge, eine Minute Abschluss.
 
 **Wenn die Runde schneller ist: drei vorbereitete Vertiefungen**
 
-Nutze eine Vertiefung, sobald du erkennbar mehrere Minuten vor deinem
-Zeitplan liegst. Warte damit nicht erst bis zum letzten Satz. Alle
-Varianten sind ausdrücklich zusätzliche Gedankenexperimente.
+Plane bei mehreren Minuten Reserve eine der folgenden Vertiefungen ein.
+Den KI-Schätzvergleich findest du im Abschluss; die beiden anderen Varianten
+lassen sich bereits in der Vergleichsphase besprechen.
 
 **Vier Minuten: „Kann die KI auch selbst eine Zahl vorschlagen?“**
 
-> Angenommen, wir lassen zusätzlich eine KI schätzen: Welchen Kontext
-> müsste sie bekommen, damit wir diese Einschätzung überhaupt prüfen
-> können? Wann würden wir ihren Vorschlag in unserer Runde zeigen?
+Im Abschluss steht dafür **Wie schätzt die KI mit unseren Referenzen?** bereit.
+Führe diese Vertiefung dort nach den beiden menschlichen Schätzrunden durch.
 
-Eine Minute eigene Notizen, zwei Minuten Austausch, eine Minute
-Zusammenfassung. Mögliche Punkte: dieselbe Story, dieselbe Definition
-of Done, dieselben Referenzen, offengelegte Annahmen und Belege. Eine
-begründete KI-Einschätzung könnte anschließend als weiterer Beitrag
-geprüft werden. Das bisherige Experiment untersucht diese Variante
-nicht. Für einen Vergleich blieben die eigenen Erstschätzungen vorher
-verdeckt. Die spätere tatsächliche Arbeit wäre eine wichtige Grundlage
-für die Bewertung des Vorschlags.
+> Jetzt lassen wir auch die KI eine Zahl vorschlagen. Sie bekommt dieselben
+> drei Referenzschätzungen, das Ticket, den geklärten Umfang und unsere
+> Board-Erkenntnisse. Unsere eigenen Zahlen verraten wir ihr zunächst nicht.
+> Vergleicht anschließend auch die Begründung: Welche Arbeit sieht sie,
+> welche Annahme macht sie, und welche Rückfrage hilft uns weiter?
+
+Klicke **Schätzprompt mit Referenzen kopieren** und starte einen frischen
+KI-Chat. Der Prompt enthält den benötigten Kontext; weiterer Repository-Zugriff
+ist nicht erforderlich. Zeige die Antwort auf dem geteilten Bildschirm.
+Alle öffnen **Eure zweite Schätzrunde zum Vergleich** in der App.
+
+Eine Minute für Prompt und Antwort, zwei Minuten für den Vergleich, eine Minute
+für eine eigene Notiz: eine hilfreiche Erkenntnis oder nächste Rückfrage.
+Dauert die Antwort länger als etwa 90 Sekunden, nehmt den Versuch für später mit.
+Die KI-Antwort wird nicht automatisch in der App oder im Protokoll gespeichert.
+
+> Eine ähnliche Zahl allein sagt noch nicht, wie gut die Schätzung ist.
+> Unsere drei Referenzen sind fiktiv. Im eigenen Projekt würden wir echte
+> abgeschlossene Vergleichsaufgaben mit ihren damaligen Schätzungen verwenden
+> und später ansehen, welche Arbeit bei der neuen Aufgabe tatsächlich anfiel.
 
 **Vier Minuten: „Jetzt sollen es 100.000 Bestellungen sein.“**
 

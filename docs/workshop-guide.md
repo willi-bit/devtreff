@@ -145,6 +145,30 @@ prüft die Person ihre ursprüngliche Einschätzung erneut.
 
 ## Abschluss und erneuter Durchlauf
 
+Im Abschluss unter **Wie schätzt die KI mit unseren Referenzen?** steht ein
+optionales Experiment für etwa vier zusätzliche Minuten bereit:
+
+1. **Schätzprompt mit Referenzen kopieren** und in einen frischen KI-Chat einfügen.
+   Der Prompt enthält ORD-42, dieselbe Definition of Done, die fiktiven
+   Referenzschätzungen 2/3/8, die Produktantworten sowie Fakten, Annahmen und
+   Restfragen vom Board. Die Stimmen und Begründungen zu ORD-42 werden nicht
+   mitkopiert. Der Prompt funktioniert ohne Repository-Zugriff.
+2. Die KI-Antwort auf dem geteilten Bildschirm zeigen. Alle öffnen
+   **Eure zweite Schätzrunde zum Vergleich** in der App.
+3. Zahl und Begründung vergleichen: Welche Referenz trägt die Einschätzung?
+   Welche Arbeit oder Annahme beurteilen Mensch und KI unterschiedlich?
+   Eine hilfreiche Erkenntnis oder nächste Rückfrage als eigene Notiz festhalten.
+
+Zeitbudget: etwa eine Minute für Prompt und Antwort, zwei Minuten Vergleich,
+eine Minute Erkenntnis. Wenn die Antwort länger als etwa 90 Sekunden dauert,
+den Versuch für später mitnehmen. Die KI-Antwort bleibt im Chat und wird nicht
+automatisch im Workshop-Protokoll gespeichert.
+
+Die Aufgabe ist explorativ. Drei fiktive Referenzen und eine Übungsstory zeigen
+Unterschiede in den Begründungen; die Nähe zur Teamzahl belegt noch keine
+Schätzgenauigkeit. Für einen Versuch im eigenen Projekt echte abgeschlossene
+Vergleichsaufgaben und die damaligen Team-Schätzungen verwenden.
+
 Im Vergleich und am Ende können alle das Ergebnis als Markdown herunterladen.
 Für vollständige Terminantworten erst nach deren Aufdecken herunterladen.
 

@@ -15,6 +15,7 @@ Coding-Agent neben der App statt.
 - Vier geführte Klärungsschritte mit getrennten Aufträgen für Moderation und Teilnehmende; offene Fragen werden in den KI-Auftrag übernommen
 - Von der Moderation freigegebene PO-Antworten für ORD-42
 - Verdeckte Antworten auf die Terminfrage, Abschluss und Markdown-Protokoll
+- Optionaler KI-Schätzvergleich im Abschluss mit kopierbarem Prompt, denselben Referenzen und dem geklärten Ticket
 - Session-Neustart für Generalproben
 - Ein ausführbares, fiktives B2B-Beispiel mit Statusfilter, Pagination und Kunden-CSV
 
@@ -118,7 +119,7 @@ Browseransichten gegen das echte Entwicklungsbackend durchspielen.
 
 - `src/app/`: Next.js App Router und Styles
 - `src/components/`: Startseite, Workshop-Ansichten und B2B-Oberfläche
-- `shared/workshop.ts`: Phasen, Texte, Startticket, Referenzen und Analyseauftrag
+- `shared/workshop.ts`: Phasen, Texte, Startticket, Referenzen, Analyse- und Schätzauftrag
 - `shared/introduction.ts`: Einstiegsfolien, Gesprächsimpulse, Moderationshinweise und Quellen
 - `convex/rooms.ts`: gemeinsame Session mit serverseitigen Freigaben
 - `convex/schema.ts`: Räume, Teilnehmende, Stimmen, Erkenntnisse und Terminantworten

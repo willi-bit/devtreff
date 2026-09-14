@@ -43,6 +43,7 @@ import { useDemoAccess } from "./convex-client-provider";
 import { AppLoading, Avatar, Button, ErrorNote, Logo } from "./ui";
 import { AnalysisPanel, WorkshopGuidance } from "./workshop-guidance";
 import { WorkshopIntroduction } from "./workshop-introduction";
+import { AiEstimationExperiment } from "./ai-estimation-experiment";
 import {
   LobbyPanel,
   RefinementPanel,
@@ -420,6 +421,7 @@ function Workspace({ room, token }: { room: Room; token: string }) {
             {room.phase === "done" && (
               <>
                 <Takeaways />
+                <AiEstimationExperiment room={room} />
                 <details className="panel recap-details">
                   <summary>
                     Unsere beiden Schätzrunden ansehen <ChevronDown size={17} />
